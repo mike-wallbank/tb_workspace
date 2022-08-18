@@ -7,8 +7,11 @@ from PandAna import *
 
 # Vars to save to the output h5
 def kPDG(tables):
-    return tables['rec.mc.nu']['pdg']
+    return tables['rec.mc.cosmic']['pdg']
 kPDG = Var(kPDG)
+
+# Cuts (you need this?)
+kCut = Cut(lambda tables: tables['rec.slc']['nhit'] > 0)
 
 def kMap(tables):
     return tables['rec.training.cvnmaps']['cvnmap']
