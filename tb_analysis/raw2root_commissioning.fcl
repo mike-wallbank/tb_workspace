@@ -1,0 +1,16 @@
+#include "beamline2rawdigitjob.fcl"
+
+source.BeamlineUnpack.TriggerLatency: 100
+source.BeamlineUnpack.TriggerSource: "Digitizer"
+source.BeamlineUnpack.UnpackTrigger: false
+source.BeamlineUnpack.UnpackDigitizer: true
+source.BeamlineUnpack.UnpackWireChamber: false
+source.BeamlineUnpack.UnpackTDU: false
+
+source.FilterEvents: true
+
+services.message.destinations.debugmsg.threshold: "INFO"
+
+#services.BeamlineChannelMap.ChannelMap.OtherChannels: [17,18,19,20]
+#services.BeamlineChannelMap.ChannelMap.OtherChannels: [4,17,18,19,20]
+#services.BeamlineChannelMap.ChannelMap.WCChannels: [5]

@@ -1,0 +1,4 @@
+#include "tbdeadtimefilterjob.fcl"
+
+services.TBDeadTimeHandler.DeadTimeFileName: "/nova/ana/users/wallbank/TestBeam/Overlays/TBDeadTime_84us_r101450.root"
+services.TBDeadTimeHandler.FEBsIgnored: [ [2,27] ]

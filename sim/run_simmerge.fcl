@@ -1,0 +1,6 @@
+#include "TBSimOverlay.fcl"
+#include "tb_sim_beambg_overlay_job.fcl"
+
+physics.filters.dataspill.wrapFiles: true
+physics.filters.dataspill.readMode: "randomReplace"
+physics.filters.dataspill.fileNames: @local::secondaryfilelist_r101450_filter

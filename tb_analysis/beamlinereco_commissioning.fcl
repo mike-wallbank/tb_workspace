@@ -1,0 +1,5 @@
+#include "beamlinerecojob.fcl"
+
+physics.beam_reco: [ tofcfdhitfinder, tofcalibration ]
+physics.trigger_paths: [ beam_reco ]
+

@@ -1,0 +1,28 @@
+#include "testbeamservices.fcl"
+#include "TBDetAna.fcl"
+
+process_name: TBRecoAna
+
+services:
+{
+  # Load the service that manages root files for histograms.
+  @table::standard_tbservices
+  TFileService: { fileName: "tbdetana_hist.root" }
+}
+
+source:
+{
+  module_type: RootInput
+}
+
+physics:
+{
+  analyzers:
+  {
+    tbdetana: @local::standard_tbdetana
+  }
+
+  ana: [ tbdetana ]
+  end_paths: [ ana ]
+
+}

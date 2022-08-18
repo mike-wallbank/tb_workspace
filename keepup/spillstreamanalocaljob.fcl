@@ -1,0 +1,4 @@
+#include "spillstreamanajob.fcl"
+
+physics.analyzers.spillana.BeamlineInfoFileName: "/nova/ana/users/wallbank/TestBeam/KeepUpAna/Period4/TBRecoAna_r101577-r101679.root"
+#physics.analyzers.spillana.BeamlineInfoTreeName: "tbrecoana/evts"

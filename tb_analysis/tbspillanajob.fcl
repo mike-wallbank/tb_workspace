@@ -1,0 +1,53 @@
+#
+# tb_beam_and_det_reco_job.fcl
+# Run full test beam (beamline & detector) reconstruction
+#
+
+#include "testbeamservices.fcl"
+#include "testbeamreco.fcl"
+#include "beamlineservices.fcl"
+#include "beamlinereco.fcl"
+
+#include "TBSpillInfo.fcl"
+
+process_name: TBReco
+
+services: {
+  # Load the service that manages root files for histograms.
+  TFileService: { fileName: "testbeamreco_r%r-%R_hist.root" closeFileFast: false }
+  @table::standard_tbservices
+  @table::standard_beamlineservices
+}
+
+source:
+{
+  module_type: RootInput
+}
+
+physics: {
+
+  producers: {
+    tbspillinfo: @local::standard_tbspillinfo
+  } 
+
+  analyzers: {
+    metadata: @local::standard_metadata
+  }
+
+  reco: [ tbspillinfo ]
+
+  trigger_paths: [ reco ]
+
+  stream1:   [ outreco, metadata ]
+  end_paths: [ stream1 ]
+}
+
+outputs: {
+  outreco: {
+    module_type: RootOutput
+    fileName: "%ifb_%tc_reco.root"
+    dataTier: "full-reconstructed"
+  }
+}
+
+physics.producers.wctrackreco.WCTrackAlg.CoordSystem: 1

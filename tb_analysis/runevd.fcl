@@ -1,0 +1,11 @@
+#include "beamlineevdjob.fcl"
+
+physics.analyzers.beamlineevd.DrawNOvA:         true
+physics.analyzers.beamlineevd.DrawNOvATracks:   false
+physics.analyzers.beamlineevd.DrawNOvAProngs:   true
+physics.analyzers.beamlineevd.DrawWC:           true
+physics.analyzers.beamlineevd.DrawWCReco:       true
+physics.analyzers.beamlineevd.DrawUSToF:        true
+physics.analyzers.beamlineevd.DrawDSToF1:       true
+physics.analyzers.beamlineevd.DrawDSToF2:       true
+physics.analyzers.beamlineevd.DrawCherenkov:    true

@@ -1,0 +1,397 @@
+physics: {
+   ana: [
+      "tbdeadtime"
+   ]
+   analyzers: {
+      tbdeadtime: {
+         BeamTrigInfoFileName: "TestBeamCommissioning/BeamTrigEventInfo_Period3.root"
+         BeamTrigInfoTreeName: "beamtrigeventinfo/BeamTriggers"
+         CellHitDataLabel: "calhit"
+         DeadTimeAlg: {
+            DCMHitGapLengthNS: 80000
+            DCMsIgnored: [
+               3
+            ]
+            FEBHitGapLengthNS: 1e7
+            FEBStatusLengthNS: 1.1e8
+            FEBsIgnored: []
+         }
+         RawDataLabel: "daq"
+         TrigTimeOffsetSecs: 5e-5
+         module_label: "tbdeadtime"
+         module_type: "TBDeadTime"
+      }
+   }
+   end_paths: [
+      "ana"
+   ]
+}
+process_name: "TBDeadTime"
+services: {
+   BackTracker: {
+      DoHitsCheck: true
+      GeantModuleLabel: "geantgen"
+      MCOverlayMode: false
+      MRMode: false
+      MinContribFrac: 1e-1
+      MinPhysicsFrac: 5e-1
+      MinPhysicsHits: 4
+      PhotonModuleLabel: "photrans"
+      TrueEnergyModuleLabel: "geantgen"
+      service_type: "BackTracker"
+   }
+   BadChanList: {
+      AbortIfNoSubrun: false
+      AbortIfNoneFound: true
+      AbortOnSmallRunNum: false
+      ApplyBadChan: 0
+      ApplyFEBDropout: false
+      ApplyKnownBadChannels: true
+      BadChanCSVFile: ""
+      CellHitLabel: "calhit"
+      EventCheck: true
+      FEBDropoutTag: "v1.0"
+      KnownBadChannels: [
+         "2-06-04-62",
+         "2-06-04-63",
+         "2-05-10-62",
+         "2-05-10-63",
+         "2-08-11-15",
+         "2-08-11-14",
+         "1-01-04-06",
+         "1-01-04-07",
+         "1-01-02-61",
+         "1-01-02-62",
+         "2-05-11-04",
+         "2-05-11-06",
+         "2-08-12-04",
+         "2-08-11-05",
+         "2-08-07-18",
+         "2-08-07-19",
+         "2-02-06-46",
+         "2-02-06-47",
+         "2-04-06-62",
+         "2-04-06-63",
+         "2-10-02-32",
+         "2-10-02-33",
+         "2-11-04-57",
+         "2-11-04-58"
+      ]
+      MCRunNumber: 0
+      MCSubrunNumber: 0
+      NewCosmicEffTable: false
+      PedestalThresholdHigh: 4095
+      PedestalThresholdLow: 0
+      RandomBadChannelFraction: 1e-4
+      RawDigitLabel: "daq"
+      ValidityTagFarDet: ""
+      ValidityTagNearDet: ""
+      VldRunGrouping: 10
+      service_type: "BadChanList"
+   }
+   CMap: {
+      AbortIfLoadFails: true
+      UseExceptions: false
+      Verbosity: 0
+      service_type: "CMap"
+   }
+   Calibrator: {
+      AbsConstsCSVPath: ""
+      AbsEpochTag: "v2.6"
+      AttenCSVPath: ""
+      AttenEpochTag: "v2.6"
+      CalibrationMode: "default"
+      CellByCellCalibRandomOffset: 0
+      CellByCellCalibRandomOffsetHighResolution: false
+      CellByCellCalibRandomOffsetSeed: 24680
+      DriftCSV: ""
+      DriftConstsCSVPath: ""
+      DriftEpochTag: ""
+      DriftGradient: 0
+      DriftReference: 0
+      Gain: -1
+      MakeSinglePointCellHits: false
+      MaskUncalibratedChannelsInMC: true
+      ReadEpochsFromCSV: true
+      SimulateDrift: false
+      Tag: "v15"
+      TimingConstsCSVPath: ""
+      TimingEpochTag: "v2.5"
+      TimingTag: "tv6"
+      UseAbsEpochs: true
+      UseAttenEpochs: true
+      UseCSVsFromUPS: true
+      UseCellByCellCalibRandomOffset: false
+      UseDrift: false
+      UseDriftEpochs: true
+      UseGainSetting4Abs: false
+      UseGainSetting4Atten: false
+      UseTimingEpochs: true
+      UseTimingOffsets: true
+      UseXFunction: false
+      UseYFunction: false
+      XMuCg100FunctionForm: ""
+      XMuCg100FunctionParams: []
+      Xg100FunctionForm: ""
+      Xg100FunctionParams: []
+      Xg140FunctionForm: ""
+      Xg140FunctionParams: []
+      Yg100FunctionForm: ""
+      Yg100FunctionParams: []
+      Yg140FunctionForm: ""
+      Yg140FunctionParams: []
+      default: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_460_7000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_380_7000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+      }
+      newfunc: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_410_9000_110000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_424_10449_110000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+      }
+      service_type: "Calibrator"
+   }
+   CatalogInterface: {
+      service_provider: "TrivialFileDelivery"
+      service_type: "CatalogInterface"
+   }
+   Detector: {
+      service_type: "Detector"
+   }
+   FiberBrightness: {
+      BrightnessFile_FD: "PhotonTransport/fdBrightnessFromCosmics.root"
+      BrightnessFile_ND: "PhotonTransport/ndBrightnessFromCosmics.root"
+      BrightnessFile_TB: "PhotonTransport/tbBrightnessFromCosmics.root"
+      BrightnessLabel: "photrans"
+      BrightnessMapName: "BrightnessByBin"
+      BrightnessValueMapName: "BrightnessByCell"
+      BrightnessValueName: "BrightnessValue"
+      ReadFromFile: false
+      service_type: "FiberBrightness"
+   }
+   FileTransfer: {
+      service_provider: "TrivialFileTransfer"
+      service_type: "FileTransfer"
+   }
+   Geometry: {
+      ForceUseFCLOnly: true
+      GDML: "Geometry/gdml/testbeam-2x2-2block-xtru-vacuum-stagger.gdml"
+      StoreTempGeo: "/tmp"
+      fd: {
+         BigBoxRange: 7500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 50
+         FiducialVolumeXLo: 50
+         FiducialVolumeYHi: 50
+         FiducialVolumeYLo: 50
+         FiducialVolumeZHi: 50
+         FiducialVolumeZLo: 50
+      }
+      nd: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      ndos: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      service_type: "Geometry"
+      tb: {
+         BigBoxRange: 1500
+         BigBoxUsed: true
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+   }
+   HoughCalc: {
+      service_type: "HoughCalc"
+   }
+   IFBeam: {
+      service_type: "IFBeam"
+   }
+   IFDH: {
+      IFDH: {
+         IFDH_BASE_URI: "http://samweb.fnal.gov:8480/sam/nova/api"
+      }
+      service_type: "IFDH"
+   }
+   LiveGeometry: {
+      CalHitLabel: "calhit"
+      CheckBadChannels: true
+      NoRunHistory: false
+      Verbose: false
+      service_type: "LiveGeometry"
+   }
+   MagneticField: {
+      FieldDescriptions: [
+         {
+            ConstantField: [
+               0,
+               0,
+               0
+            ]
+            MagnetizedVolume: "vWorld"
+            UseField: 0
+         }
+      ]
+      service_type: "MagneticField"
+   }
+   RandomNumberGenerator: {
+      service_type: "RandomNumberGenerator"
+   }
+   RunHistory: {
+      AbortIfMissingRunInDB: true
+      AbortIfNoMask: true
+      AnalysisDiBlockMasking: true
+      CalHitLabel: "calhit"
+      CustomMask: [
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+      CustomMasking: false
+      DetGainTag: ""
+      DiBlockMaskTag: "v4.0"
+      FDRHCRunStart: [
+         23420,
+         24588,
+         25413,
+         28037
+      ]
+      FDRHCRunStop: [
+         23670,
+         24613,
+         26685,
+         32397
+      ]
+      FakeRunNumber: 0
+      GetDiBlockMaskFromCondb: true
+      NDRHCRunStart: [
+         11632,
+         11921,
+         12087,
+         12517
+      ]
+      NDRHCRunStop: [
+         11667,
+         11925,
+         12289,
+         13131
+      ]
+      TimeQueries: false
+      UseMasking: false
+      UseQE4HWDB: false
+      Verbosity: 100
+      service_type: "RunHistory"
+   }
+   TBDeadTimeHandler: {
+      DCMsIgnored: [
+         3
+      ]
+      DeadTimeFileName: "TestBeamCommissioning/TBDeadTime_84us_r101450.root"
+      DeadTimeTreeName: "tbdeadtime/DeadTimeInfo"
+      FEBsIgnored: []
+      service_provider: "TBDeadTimeHandler"
+      service_type: "TBDeadTimeHandler"
+   }
+   TFileService: {
+      fileName: "TBDeadTime.root"
+      service_type: "TFileService"
+   }
+   TestBeamRunPeriod: {
+      service_provider: "TestBeamRunPeriod"
+      service_type: "TestBeamRunPeriod"
+   }
+   message: {
+      destinations: {
+         STDOUT: {
+            categories: {
+               ArtReport: {
+                  limit: 100
+               }
+               MTdiagnostics: {
+                  limit: 0
+               }
+               default: {
+                  limit: -1
+               }
+            }
+            threshold: "INFO"
+            type: "cout"
+         }
+      }
+   }
+   scheduler: {
+      debug: {
+         fileName: "cfg.fcl"
+         option: "debug-config"
+         printMode: "raw"
+      }
+      errorOnMissingConsumes: false
+      errorOnSIGINT: true
+      num_schedules: 1
+      num_threads: 1
+      pruneConfig: true
+      reportUnused: true
+   }
+}
+source: {
+   module_label: "source"
+   module_type: "RootInput"
+}
+standard_tbdeadtime: {
+   BeamTrigInfoFileName: "/nova/ana/users/wallbank/TestBeam/BeamTrigEventInfo/BeamTrigEventInfo_Period3.root"
+   BeamTrigInfoTreeName: "beamtrigeventinfo/BeamTriggers"
+   CellHitDataLabel: "calhit"
+   DeadTimeAlg: {
+      DCMHitGapLengthNS: 80000
+      DCMsIgnored: [
+         3
+      ]
+      FEBHitGapLengthNS: 1e7
+      FEBStatusLengthNS: 1.1e8
+      FEBsIgnored: []
+   }
+   RawDataLabel: "daq"
+   TrigTimeOffsetSecs: 5e-5
+   module_type: "TBDeadTime"
+}
+standard_tbdeadtimealg: {
+   DCMHitGapLengthNS: 80000
+   DCMsIgnored: [
+      3
+   ]
+   FEBHitGapLengthNS: 1e7
+   FEBStatusLengthNS: 1.1e8
+   FEBsIgnored: []
+}

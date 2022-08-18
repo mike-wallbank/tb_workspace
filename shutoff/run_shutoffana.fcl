@@ -1,0 +1,3 @@
+#include "shutoffanajob.fcl"
+
+physics.analyzers.shutoffana.ShutOffFileName: "/nova/ana/users/wallbank/TestBeam/FlatTreeData/Period3/R21-07-27-testbeam-production.a/TBRecoAna_r101400-r101483.root"

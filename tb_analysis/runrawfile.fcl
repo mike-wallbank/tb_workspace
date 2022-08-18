@@ -1,0 +1,4 @@
+#include "rawfileanalyzerjob.fcl"
+
+physics.analyzers.rawfileanalyzer.SpillLength: 4.3
+physics.analyzers.rawfileanalyzer.ifEpsilon: 6

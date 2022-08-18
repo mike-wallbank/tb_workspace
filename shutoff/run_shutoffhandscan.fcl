@@ -1,0 +1,3 @@
+#include "shutoffhandscanjob.fcl"
+
+physics.analyzers.shutoffhandscan.OutputPDFName: "ShutOffHandScan_r101401_bl"

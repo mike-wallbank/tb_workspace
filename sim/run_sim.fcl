@@ -1,0 +1,4 @@
+#include "prod_tb_gen_text_job.fcl"
+
+physics.producers.generator.InputFileName: "/nova/app/users/wallbank/test_testbeam/TestBeamAna/evts_period3.txt"
+#physics.producers.generator.InputFileName: "/nova/app/users/wallbank/tb_sim/evts.txt"

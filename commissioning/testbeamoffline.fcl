@@ -1,0 +1,5 @@
+#include "testbeam2rawdigitjob.fcl"
+
+services.message.destinations.debugmsg.threshold: "INFO"
+source.BeamlineUnpack.TriggerBoardOffset: 0
+#source.BeamlineUnpack.TDUOffset: -32052

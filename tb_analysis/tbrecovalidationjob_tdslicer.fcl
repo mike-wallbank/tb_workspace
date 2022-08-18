@@ -1,0 +1,4 @@
+#include "tbrecovalidationjob.fcl"
+
+physics.analyzers.tbrecovalidation.SliceModuleLabel:  "tdslicer"
+physics.analyzers.tbrecovalidation.VertexModuleLabel: "cosmicrayvertex"

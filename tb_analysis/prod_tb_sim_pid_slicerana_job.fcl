@@ -1,0 +1,11 @@
+#
+# prod_tb_sim_pid_job.fcl
+# Run the NOvA detector reconstruction
+#
+
+#include "prod_tb_beamline_pid_job.fcl"
+
+services.FiberBrightness.BrightnessLabel: ""
+
+physics.producers.calhit.RawDataLabel: "daqmerge"
+physics.reco: [ storegdml, @sequence::standard_tbdetreco_seq ]

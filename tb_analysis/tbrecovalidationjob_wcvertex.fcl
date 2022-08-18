@@ -1,0 +1,3 @@
+#include "tbrecovalidationjob.fcl"
+
+physics.analyzers.tbrecovalidation.VertexModuleLabel: "wcvertex"

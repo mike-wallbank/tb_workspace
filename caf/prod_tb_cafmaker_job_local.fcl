@@ -1,0 +1,12 @@
+#include "testbeamservices.fcl"
+#include "cafmakerjob.fcl"
+
+services: {
+  @table::standard_tbservices
+  TBDeadTimeHandler: @local::standard_tbdeadtimehandler
+}
+
+standard_tbcafmaker: @local::standard_cafmaker
+standard_tbcafmaker.StrictMode: false
+standard_tbcafmaker.FillNuTree: false
+physics.producers.cafmaker: @local::standard_tbcafmaker

@@ -1,0 +1,1192 @@
+outputs: {
+   out1: {
+      SelectEvents: [
+         "simulate"
+      ]
+      fileName: "text_gen.root"
+      module_label: "out1"
+      module_type: "RootOutput"
+   }
+}
+physics: {
+   analyzers: {
+      metadata: {
+         module_label: "metadata"
+         module_type: "Metadata"
+         params: {
+            NOVA: {
+               Label: "beta"
+               Standard: "false"
+            }
+         }
+         runType: "physics"
+         useFhclParent: false
+         useSubruns: true
+      }
+   }
+   end_paths: [
+      "stream1"
+   ]
+   filters: {
+      occupied: {
+         CheckDAQ: true
+         CheckG4Gen: true
+         DAQLabel: "daq"
+         G4GenLabel: "geantgen"
+         GenLabel: "generator"
+         module_label: "occupied"
+         module_type: "OccupiedSpillFilter"
+      }
+   }
+   producers: {
+      daq: {
+         FirstDaqCollection: "daqv4"
+         InstanceLabel: ""
+         SecondDaqCollection: "daqv5"
+         module_label: "daq"
+         module_type: "MergeTBDaqCollections"
+      }
+      daqv4: {
+         CopyNoTruthHitsFromLabel: ""
+         PhotonModuleLabel: "photrans"
+         TraceCells: []
+         TracePlanes: []
+         fd: {
+            ADCMaxE: 180700
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 10373
+            ASICFallLegacy: 7000
+            ASICFallSlope: 2.4
+            ASICMaxStep: 500
+            ASICPreAmpTime: 112557
+            ASICRiseLegacy: 432
+            ASICRiseTime: 420
+            BaselineMean: 4.115e2
+            BaselineSigma: 8.84e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 4.5
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 2.45e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -1500
+            FPGA_MatchedFiltering_EndTime: 10000
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 0
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_fdLowGain_v3.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 5.87e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 8.99e-1
+            }
+            Gain140: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_fdHighGain_v3.root"
+               Gain: 140
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 3.96e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 4.93e-1
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 8
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/fd_thresholdDist_lowThresh.root"
+            ThresholdSigma: 4
+            UseDBThresholds: false
+            UseLegacyShaper: false
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: true
+            VaryNoiseByThreshold: true
+         }
+         module_label: "daqv4"
+         module_type: "ReadoutSim"
+         nd: {
+            ADCMaxE: 170500
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 6728
+            ASICFallLegacy: 4500
+            ASICFallSlope: 9e-1
+            ASICMaxStep: 125
+            ASICPreAmpTime: 119278
+            ASICRiseLegacy: 136
+            ASICRiseTime: 107
+            BaselineMean: 5.937e2
+            BaselineSigma: 7.727e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 1.125
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 5.35e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -500
+            FPGA_MatchedFiltering_EndTime: 2500
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 0
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_nd_v3.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 9.68e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 2.06
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 2
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/nd_thresholdDist.root"
+            ThresholdSigma: 5
+            UseDBThresholds: false
+            UseLegacyShaper: false
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: true
+            VaryNoiseByThreshold: true
+         }
+         ndos: {
+            ADCMaxE: 212800
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 7000
+            ASICFallLegacy: 7000
+            ASICFallSlope: 0
+            ASICMaxStep: 10
+            ASICPreAmpTime: 83300
+            ASICRiseLegacy: 380
+            ASICRiseTime: 380
+            BaselineMean: 5.937e2
+            BaselineSigma: 7.727e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 4.5
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 5.35e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -1500
+            FPGA_MatchedFiltering_EndTime: 10000
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 100
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_ndos.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 2e-1
+               UseNewEmptyCellNoise: false
+               VoltageNoiseDensity: 2.3
+            }
+            Gain160: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_ndos.root"
+               Gain: 160
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 2e-1
+               UseNewEmptyCellNoise: false
+               VoltageNoiseDensity: 2.3
+            }
+            Gain80: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_ndos.root"
+               Gain: 80
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 2e-1
+               UseNewEmptyCellNoise: false
+               VoltageNoiseDensity: 2.3
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 8
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/nd_thresholdDist.root"
+            ThresholdSigma: 5
+            UseDBThresholds: false
+            UseLegacyShaper: true
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: false
+            VaryNoiseByThreshold: true
+         }
+         tb: {
+            ADCMaxE: 180700
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 10373
+            ASICFallLegacy: 4500
+            ASICFallSlope: 2.4
+            ASICMaxStep: 500
+            ASICPreAmpTime: 112557
+            ASICRiseLegacy: 136
+            ASICRiseTime: 420
+            BaselineMean: 4.115e2
+            BaselineSigma: 9.032e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 1.125
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 2.45e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -500
+            FPGA_MatchedFiltering_BaslineTime: -1500
+            FPGA_MatchedFiltering_EndTime: 10000
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 100
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_nd_v3.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 9.68e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 2.06
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 8
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/tbv4_thresholdDist.root"
+            ThresholdSigma: 5
+            UseDBThresholds: false
+            UseLegacyShaper: false
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: true
+            VaryNoiseByThreshold: true
+         }
+      }
+      daqv5: {
+         CopyNoTruthHitsFromLabel: ""
+         PhotonModuleLabel: "photrans"
+         TraceCells: []
+         TracePlanes: []
+         fd: {
+            ADCMaxE: 180700
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 10373
+            ASICFallLegacy: 7000
+            ASICFallSlope: 2.4
+            ASICMaxStep: 500
+            ASICPreAmpTime: 112557
+            ASICRiseLegacy: 432
+            ASICRiseTime: 420
+            BaselineMean: 4.115e2
+            BaselineSigma: 8.84e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 4.5
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 2.45e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -1500
+            FPGA_MatchedFiltering_EndTime: 10000
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 0
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_fdLowGain_v3.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 5.87e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 8.99e-1
+            }
+            Gain140: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_fdHighGain_v3.root"
+               Gain: 140
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 3.96e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 4.93e-1
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 8
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/fd_thresholdDist_lowThresh.root"
+            ThresholdSigma: 4
+            UseDBThresholds: false
+            UseLegacyShaper: false
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: true
+            VaryNoiseByThreshold: true
+         }
+         module_label: "daqv5"
+         module_type: "ReadoutSim"
+         nd: {
+            ADCMaxE: 170500
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 6728
+            ASICFallLegacy: 4500
+            ASICFallSlope: 9e-1
+            ASICMaxStep: 125
+            ASICPreAmpTime: 119278
+            ASICRiseLegacy: 136
+            ASICRiseTime: 107
+            BaselineMean: 5.937e2
+            BaselineSigma: 7.727e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 1.125
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 5.35e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -500
+            FPGA_MatchedFiltering_EndTime: 2500
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 0
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_nd_v3.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 9.68e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 2.06
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 2
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/nd_thresholdDist.root"
+            ThresholdSigma: 5
+            UseDBThresholds: false
+            UseLegacyShaper: false
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: true
+            VaryNoiseByThreshold: true
+         }
+         ndos: {
+            ADCMaxE: 212800
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 7000
+            ASICFallLegacy: 7000
+            ASICFallSlope: 0
+            ASICMaxStep: 10
+            ASICPreAmpTime: 83300
+            ASICRiseLegacy: 380
+            ASICRiseTime: 380
+            BaselineMean: 5.937e2
+            BaselineSigma: 7.727e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 4.5
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 5.35e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -1500
+            FPGA_MatchedFiltering_EndTime: 10000
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 100
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_ndos.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 2e-1
+               UseNewEmptyCellNoise: false
+               VoltageNoiseDensity: 2.3
+            }
+            Gain160: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_ndos.root"
+               Gain: 160
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 2e-1
+               UseNewEmptyCellNoise: false
+               VoltageNoiseDensity: 2.3
+            }
+            Gain80: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_ndos.root"
+               Gain: 80
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 2e-1
+               UseNewEmptyCellNoise: false
+               VoltageNoiseDensity: 2.3
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 8
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/nd_thresholdDist.root"
+            ThresholdSigma: 5
+            UseDBThresholds: false
+            UseLegacyShaper: true
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: false
+            VaryNoiseByThreshold: true
+         }
+         tb: {
+            ADCMaxE: 170500
+            APDExcessNoiseFigure: 2e-1
+            ASICBaselineInADCCounts: 250
+            ASICFallInt: 6728
+            ASICFallLegacy: 4500
+            ASICFallSlope: 9e-1
+            ASICMaxStep: 125
+            ASICPreAmpTime: 119278
+            ASICRiseLegacy: 136
+            ASICRiseTime: 107
+            BaselineMean: 5.841e2
+            BaselineSigma: 6.971e1
+            Clocktick: 6.25e1
+            DetectorCapacitance: 10
+            EmptyCellNoiseDeadtime: 1.125
+            FEBFlashThreshold: 5000
+            FPGAAlgorithm: "DualCorrelatedSampling"
+            FPGA_DCS_LookbackSamples: 3
+            FPGA_DCS_NanosliceVersion: 3
+            FPGA_DCS_RetriggerThreshold: 5e-1
+            FPGA_DCS_ThresholdADC: 5.35e1
+            FPGA_DCS_UseNewRetriggerLogic: true
+            FPGA_MatchedFiltering_BaselineTime: -500
+            FPGA_MatchedFiltering_BaslineTime: -500
+            FPGA_MatchedFiltering_EndTime: 2500
+            FPGA_MatchedFiltering_ThresholdMatchValue: 1.87e1
+            ForceGain: 100
+            Gain100: {
+               EmptyCellNoiseFile: "ReadoutSim/emptycellnoise_nd_v3.root"
+               Gain: 100
+               GainFile: "ReadoutSim/gainDist.root"
+               LeakageCurrent: 9.68e-2
+               UseNewEmptyCellNoise: true
+               VoltageNoiseDensity: 2.06
+            }
+            GeneratePhysicsCellNoise: true
+            NumClockticksInSpill: 8800
+            NumClockticksPerDigitization: 2
+            NumNormSamples: 100000
+            Sag: true
+            SagFrac: 1.86e-2
+            ScaleEmptyCellNoiseRate: 1
+            ThresholdFile: "ReadoutSim/tbv5_thresholdDist.root"
+            ThresholdSigma: 5
+            UseDBThresholds: false
+            UseLegacyShaper: false
+            UseNewExcessNoise: true
+            UseRandomGains: true
+            UseRandomThresholds: true
+            VaryBaseline: true
+            VaryNoiseByThreshold: true
+         }
+      }
+      geantgen: {
+         G4AlgPSet: {
+            BirksConstant: 1.155e-2
+            CauchyPars: [
+               1.45689,
+               4362
+            ]
+            ChouConstant: 0
+            DetectorBigBoxRange: 1500
+            G4CheckRockVeto: true
+            G4EnergyThreshold: 1e-7
+            G4MacroPath: "g4nova/g4nova.mac"
+            G4PhysListName: "QGSP_BERT_HP"
+            GenModuleLabel: "generator"
+            IsBigBoxUsed: true
+            ManyParticles: false
+            PerformFLSHitListSuppression: true
+            PrintTables: false
+            RecordFirstBrem: false
+            RecordFirstPair: false
+            SlimSimParticles: true
+            SparseTrajectories: true
+            StoreTrajectoriesOutsideBigBox: false
+            WavelengthHi: 400
+            WavelengthLo: 200
+         }
+         module_label: "geantgen"
+         module_type: "G4Gen"
+      }
+      generator: {
+         InputFileName: "evts.txt"
+         IsRHC: false
+         MakeSpillDataObject: false
+         module_label: "generator"
+         module_type: "TextFileGen"
+      }
+      photrans: {
+         FilterModuleLabel: "geantgen"
+         fd: {
+            ApplyBirks: true
+            ApplyFiberSmearing: true
+            ApplyTweak: false
+            AttenPars: [
+               4.469e-1,
+               2.034e2,
+               5.531e-1,
+               7.522e2
+            ]
+            BrightnessFile: "PhotonTransport/fdBrightnessFromCosmics.root"
+            BrightnessMapName: "BrightnessByBin"
+            BrightnessMode: "ByCell"
+            BrightnessValueMapName: "BrightnessByCell"
+            BrightnessValueName: "BrightnessValue"
+            CerenkovEff: 8.107e-1
+            CherenkovTau: 3.6
+            CollectionRateFile: "PhotonTransport/dT_dZ_CollectionRate.root"
+            DriftGradient: 0
+            DriftReference: 0
+            EmissionTau: 9
+            FiberIndexOfRefraction: 1.59
+            LightLevelScale: 1
+            MessageLevel: 0
+            PhotonsPerMeV: 3.15104e3
+            PosCorrFile: ""
+            QuantumEff: 8.5e-1
+            ScintAlphaDEDX: 800
+            ScintAlphaProb: [
+               6.79e-1,
+               8.23e-1,
+               9.25e-1,
+               1
+            ]
+            ScintAlphaTau: [
+               3.9,
+               26,
+               110,
+               630
+            ]
+            ScintBetaDEDX: 1.6
+            ScintBetaProb: [
+               8.89e-1,
+               9.44e-1,
+               9.71e-1,
+               1
+            ]
+            ScintBetaTau: [
+               3.7,
+               24,
+               60,
+               600
+            ]
+            SimulateDrift: false
+            SmearingHistoFile: "PhotonTransport/Dt_per_z_distribution.root"
+            Step: 2
+            TimeClustering: 2
+            TweakFile: "PhotonTransport/fdTweak.root"
+            UseScintTime: false
+            WriteEmptySignals: false
+            XViewFactor: 6.418e-1
+            YViewFactor: 5.533e-1
+         }
+         module_label: "photrans"
+         module_type: "ImprovedTransport"
+         nd: {
+            ApplyBirks: true
+            ApplyFiberSmearing: true
+            ApplyTweak: false
+            AttenPars: [
+               4.469e-1,
+               2.034e2,
+               5.531e-1,
+               7.522e2
+            ]
+            BrightnessFile: "PhotonTransport/ndBrightnessFromCosmics.root"
+            BrightnessMapName: "BrightnessByBin"
+            BrightnessMode: "ByCell"
+            BrightnessValueMapName: "BrightnessByCell"
+            BrightnessValueName: "BrightnessValue"
+            CerenkovEff: 8.107e-1
+            CherenkovTau: 3.6
+            CollectionRateFile: "PhotonTransport/dT_dZ_CollectionRate.root"
+            DriftGradient: 0
+            DriftReference: 0
+            EmissionTau: 9
+            FiberIndexOfRefraction: 1.59
+            LightLevelScale: 1
+            MessageLevel: 0
+            PhotonsPerMeV: 3.15104e3
+            PosCorrFile: ""
+            QuantumEff: 8.5e-1
+            ScintAlphaDEDX: 800
+            ScintAlphaProb: [
+               6.79e-1,
+               8.23e-1,
+               9.25e-1,
+               1
+            ]
+            ScintAlphaTau: [
+               3.9,
+               26,
+               110,
+               630
+            ]
+            ScintBetaDEDX: 1.6
+            ScintBetaProb: [
+               8.89e-1,
+               9.44e-1,
+               9.71e-1,
+               1
+            ]
+            ScintBetaTau: [
+               3.7,
+               24,
+               60,
+               600
+            ]
+            SimulateDrift: false
+            SmearingHistoFile: "PhotonTransport/Dt_per_z_distribution.root"
+            Step: 2
+            TimeClustering: 2
+            TweakFile: ""
+            UseScintTime: false
+            WriteEmptySignals: false
+            XViewFactor: 5.091e-1
+            YViewFactor: 4.943e-1
+         }
+         ndos: {
+            ApplyBirks: true
+            ApplyFiberSmearing: true
+            ApplyTweak: false
+            AttenPars: [
+               2.667e-1,
+               254,
+               2.139e-1,
+               860
+            ]
+            BrightnessFile: ""
+            BrightnessMapName: "BrightnessByBin"
+            BrightnessMode: "None"
+            BrightnessValueName: "BrightnessValue"
+            CerenkovEff: 0
+            CherenkovTau: 3.6
+            CollectionRateFile: "PhotonTransport/dT_dZ_CollectionRate.root"
+            DriftGradient: 0
+            DriftReference: 0
+            EmissionTau: 9
+            FiberIndexOfRefraction: 1.59
+            LightLevelScale: 1
+            MessageLevel: 0
+            PhotonsPerMeV: 3360
+            PosCorrFile: ""
+            QuantumEff: 8.5e-1
+            ScintAlphaDEDX: 800
+            ScintAlphaProb: [
+               6.79e-1,
+               8.23e-1,
+               9.25e-1,
+               1
+            ]
+            ScintAlphaTau: [
+               3.9,
+               26,
+               110,
+               630
+            ]
+            ScintBetaDEDX: 1.6
+            ScintBetaProb: [
+               8.89e-1,
+               9.44e-1,
+               9.71e-1,
+               1
+            ]
+            ScintBetaTau: [
+               3.7,
+               24,
+               60,
+               600
+            ]
+            SimulateDrift: false
+            SmearingHistoFile: "PhotonTransport/Dt_per_z_distribution.root"
+            Step: 2
+            TimeClustering: 2
+            TweakFile: ""
+            UseScintTime: false
+            WriteEmptySignals: false
+            XViewFactor: 1.33356e-1
+            YViewFactor: 1.11987e-1
+         }
+         tb: {
+            ApplyBirks: true
+            ApplyFiberSmearing: true
+            ApplyTweak: false
+            AttenPars: [
+               4.493e-1,
+               2.036e2,
+               5.507e-1,
+               7.554e2
+            ]
+            BrightnessFile: "PhotonTransport/tbBrightnessFromCosmics.root"
+            BrightnessMapName: "BrightnessByBin"
+            BrightnessMode: "ByCell"
+            BrightnessValueMapName: "BrightnessByCell"
+            BrightnessValueName: "BrightnessValue"
+            CerenkovEff: 8.404e-1
+            CherenkovTau: 3.6
+            CollectionRateFile: "PhotonTransport/dT_dZ_CollectionRate.root"
+            DriftGradient: 0
+            DriftReference: 0
+            EmissionTau: 9
+            FiberIndexOfRefraction: 1.59
+            LightLevelScale: 1
+            MessageLevel: 0
+            PhotonsPerMeV: 3.15104e3
+            PosCorrFile: ""
+            QuantumEff: 8.5e-1
+            ScintAlphaDEDX: 800
+            ScintAlphaProb: [
+               6.79e-1,
+               8.23e-1,
+               9.25e-1,
+               1
+            ]
+            ScintAlphaTau: [
+               3.9,
+               26,
+               110,
+               630
+            ]
+            ScintBetaDEDX: 1.6
+            ScintBetaProb: [
+               8.89e-1,
+               9.44e-1,
+               9.71e-1,
+               1
+            ]
+            ScintBetaTau: [
+               3.7,
+               24,
+               60,
+               600
+            ]
+            SimulateDrift: false
+            SmearingHistoFile: "PhotonTransport/Dt_per_z_distribution.root"
+            Step: 2
+            TimeClustering: 2
+            TweakFile: ""
+            UseScintTime: false
+            WriteEmptySignals: false
+            XViewFactor: 4.791e-1
+            YViewFactor: 4.473e-1
+         }
+      }
+      rns: {
+         module_label: "rns"
+         module_type: "RandomNumberSaver"
+      }
+   }
+   simulate: [
+      "generator",
+      "geantgen",
+      "photrans",
+      "daqv4",
+      "daqv5",
+      "daq",
+      "occupied",
+      "rns"
+   ]
+   stream1: [
+      "metadata",
+      "out1"
+   ]
+   trigger_paths: [
+      "simulate"
+   ]
+}
+process_name: "OverlaySinglesGen"
+services: {
+   BackTracker: {
+      DoHitsCheck: true
+      GeantModuleLabel: "geantgen"
+      MCOverlayMode: false
+      MRMode: false
+      MinContribFrac: 1e-1
+      MinPhysicsFrac: 5e-1
+      MinPhysicsHits: 4
+      PhotonModuleLabel: "photrans"
+      TrueEnergyModuleLabel: "geantgen"
+      service_type: "BackTracker"
+   }
+   BadChanList: {
+      AbortIfNoSubrun: true
+      AbortIfNoneFound: true
+      AbortOnSmallRunNum: false
+      ApplyBadChan: 1
+      ApplyFEBDropout: false
+      ApplyKnownBadChannels: true
+      BadChanCSVFile: ""
+      CellHitLabel: "calhit"
+      EventCheck: true
+      FEBDropoutTag: "v1.0"
+      KnownBadChannels: [
+         "2-06-04-62",
+         "2-06-04-63",
+         "2-05-10-62",
+         "2-05-10-63",
+         "2-08-11-15",
+         "2-08-11-14",
+         "1-01-04-06",
+         "1-01-04-07",
+         "1-01-02-61",
+         "1-01-02-62",
+         "2-05-11-04",
+         "2-05-11-06",
+         "2-08-12-04",
+         "2-08-11-05",
+         "2-08-07-18",
+         "2-08-07-19",
+         "2-02-06-46",
+         "2-02-06-47",
+         "2-04-06-62",
+         "2-04-06-63",
+         "2-10-02-32",
+         "2-10-02-33",
+         "2-11-04-57",
+         "2-11-04-58"
+      ]
+      MCRunNumber: 0
+      MCSubrunNumber: 0
+      NewCosmicEffTable: false
+      PedestalThresholdHigh: 4095
+      PedestalThresholdLow: 0
+      RandomBadChannelFraction: -1
+      RawDigitLabel: "daq"
+      ValidityTagFarDet: ""
+      ValidityTagNearDet: ""
+      ValidityTagTestBeam: ""
+      VldRunGrouping: 10
+      service_type: "BadChanList"
+   }
+   CMap: {
+      AbortIfLoadFails: true
+      UseExceptions: false
+      Verbosity: 0
+      service_type: "CMap"
+   }
+   Calibrator: {
+      AbsConstsCSVPath: ""
+      AbsEpochTag: "v2.6"
+      AttenCSVPath: ""
+      AttenEpochTag: "v2.6"
+      CalibrationMode: "default"
+      CellByCellCalibRandomOffset: 0
+      CellByCellCalibRandomOffsetHighResolution: false
+      CellByCellCalibRandomOffsetSeed: 24680
+      DriftCSV: ""
+      DriftConstsCSVPath: ""
+      DriftEpochTag: ""
+      DriftGradient: 0
+      DriftReference: 0
+      Gain: -1
+      MakeSinglePointCellHits: false
+      MaskUncalibratedChannelsInMC: true
+      ReadEpochsFromCSV: true
+      SimulateDrift: false
+      Tag: "v15"
+      TimingConstsCSVPath: ""
+      TimingEpochTag: "v2.5"
+      TimingTag: "tv6"
+      UseAbsEpochs: true
+      UseAttenEpochs: true
+      UseCSVsFromUPS: true
+      UseCellByCellCalibRandomOffset: false
+      UseDrift: false
+      UseDriftEpochs: true
+      UseGainSetting4Abs: false
+      UseGainSetting4Atten: false
+      UseTimingEpochs: true
+      UseTimingOffsets: true
+      UseXFunction: false
+      UseYFunction: false
+      XMuCg100FunctionForm: ""
+      XMuCg100FunctionParams: []
+      Xg100FunctionForm: ""
+      Xg100FunctionParams: []
+      Xg140FunctionForm: ""
+      Xg140FunctionParams: []
+      Yg100FunctionForm: ""
+      Yg100FunctionParams: []
+      Yg140FunctionForm: ""
+      Yg140FunctionParams: []
+      default: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_460_7000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_380_7000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+      }
+      newfunc: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_410_9000_110000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_424_10449_110000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+      }
+      service_type: "Calibrator"
+   }
+   CatalogInterface: {
+      service_provider: "TrivialFileDelivery"
+      service_type: "CatalogInterface"
+   }
+   Detector: {
+      service_type: "Detector"
+   }
+   FiberBrightness: {
+      BrightnessFile_FD: "PhotonTransport/fdBrightnessFromCosmics.root"
+      BrightnessFile_ND: "PhotonTransport/ndBrightnessFromCosmics.root"
+      BrightnessFile_TB: "PhotonTransport/tbBrightnessFromCosmics.root"
+      BrightnessLabel: "photrans"
+      BrightnessMapName: "BrightnessByBin"
+      BrightnessValueMapName: "BrightnessByCell"
+      BrightnessValueName: "BrightnessValue"
+      ReadFromFile: false
+      service_type: "FiberBrightness"
+   }
+   FileTransfer: {
+      service_provider: "TrivialFileTransfer"
+      service_type: "FileTransfer"
+   }
+   Geometry: {
+      ForceUseFCLOnly: true
+      GDML: "Geometry/gdml/testbeam-2x2-2block-xtru-vacuum-stagger.gdml"
+      StoreTempGeo: "/tmp"
+      fd: {
+         BigBoxRange: 7500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 50
+         FiducialVolumeXLo: 50
+         FiducialVolumeYHi: 50
+         FiducialVolumeYLo: 50
+         FiducialVolumeZHi: 50
+         FiducialVolumeZLo: 50
+      }
+      nd: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      ndos: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      service_type: "Geometry"
+      tb: {
+         BigBoxRange: 1500
+         BigBoxUsed: true
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+   }
+   HoughCalc: {
+      service_type: "HoughCalc"
+   }
+   IFBeam: {
+      service_type: "IFBeam"
+   }
+   IFDH: {
+      IFDH: {
+         IFDH_BASE_URI: "http://samweb.fnal.gov:8480/sam/nova/api"
+      }
+      service_type: "IFDH"
+   }
+   LiveGeometry: {
+      CalHitLabel: "calhit"
+      CheckBadChannels: true
+      NoRunHistory: false
+      Verbose: false
+      service_type: "LiveGeometry"
+   }
+   MagneticField: {
+      FieldDescriptions: [
+         {
+            ConstantField: [
+               0,
+               0,
+               0
+            ]
+            MagnetizedVolume: "vWorld"
+            UseField: 0
+         }
+      ]
+      service_type: "MagneticField"
+   }
+   RandomNumberGenerator: {
+      service_type: "RandomNumberGenerator"
+   }
+   RunHistory: {
+      AbortIfMissingRunInDB: true
+      AbortIfNoMask: true
+      AnalysisDiBlockMasking: true
+      CalHitLabel: "calhit"
+      CustomMask: [
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+      CustomMasking: false
+      DetGainTag: ""
+      DiBlockMaskTag: "v4.0"
+      FDRHCRunStart: [
+         23420,
+         24588,
+         25413,
+         28037
+      ]
+      FDRHCRunStop: [
+         23670,
+         24613,
+         26685,
+         32397
+      ]
+      FakeRunNumber: 0
+      GetDiBlockMaskFromCondb: true
+      NDRHCRunStart: [
+         11632,
+         11921,
+         12087,
+         12517
+      ]
+      NDRHCRunStop: [
+         11667,
+         11925,
+         12289,
+         13131
+      ]
+      TimeQueries: false
+      UseMasking: false
+      UseQE4HWDB: true
+      Verbosity: 100
+      service_type: "RunHistory"
+   }
+   TFileService: {
+      closeFileFast: false
+      fileName: "text_hist.root"
+      service_type: "TFileService"
+   }
+   TestBeamRunPeriod: {
+      service_provider: "TestBeamRunPeriod"
+      service_type: "TestBeamRunPeriod"
+   }
+   TimeTracker: {
+      service_type: "TimeTracker"
+   }
+   message: {
+      destinations: {
+         STDOUT: {
+            categories: {
+               ArtReport: {
+                  limit: 100
+               }
+               MTdiagnostics: {
+                  limit: 0
+               }
+               default: {
+                  limit: -1
+               }
+            }
+            threshold: "INFO"
+            type: "cout"
+         }
+      }
+   }
+   scheduler: {
+      debug: {
+         fileName: "cfg.fcl"
+         option: "debug-config"
+         printMode: "raw"
+      }
+      errorOnMissingConsumes: false
+      errorOnSIGINT: true
+      num_schedules: 1
+      num_threads: 1
+      pruneConfig: true
+      reportUnused: true
+   }
+}
+source: {
+   firstEvent: 1
+   firstRun: 1.000001e6
+   firstSubRun: 1
+   maxEvents: 40000
+   module_label: "source"
+   module_type: "EmptyEvent"
+}
+trigger_paths: {
+   trigger_paths: [
+      "simulate"
+   ]
+}

@@ -1,0 +1,24 @@
+#include "OverlayAna.fcl"
+#include "prod_tb_sim_pid_job.fcl"
+
+process_name: SlicerAna
+
+physics.analyzers.overlayana: @local::standard_overlayana
+physics.ana: [ overlayana, outreco ]
+physics.end_paths: [ ana ]
+
+physics.producers.slicer.tb.MinCell: 2
+physics.producers.slicer.tb.TScale: 6
+physics.producers.slicer.tb.Tolerance: 6
+physics.producers.slicer.tb.ZScale: 200
+
+physics.producers.slicer2d.tb.CalcDT2D: false
+physics.producers.slicer2d.tb.CellScale: 16
+physics.producers.slicer2d.tb.MaxEventHits: 100000
+physics.producers.slicer2d.tb.MinCell: 2
+physics.producers.slicer2d.tb.MinDens: 3
+physics.producers.slicer2d.tb.MinIsol: 8
+physics.producers.slicer2d.tb.MinPrimDist: 5
+physics.producers.slicer2d.tb.PlaneScale: 12
+physics.producers.slicer2d.tb.TimeScale: 16
+physics.producers.slicer2d.tb.TimeThreshold: 10

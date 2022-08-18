@@ -1,0 +1,4 @@
+#include "tbdeadtimefilterjob.fcl"
+
+services.TBDeadTimeHandler.DeadTimeUPSPath: "TBDATA_DEADTIME_84us"
+services.TBDeadTimeHandler.DeadTimeFileName: "TBDeadTime_r100224-r101483.root"

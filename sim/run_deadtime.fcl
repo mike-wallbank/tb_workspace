@@ -1,0 +1,5 @@
+#include "tbdeadtimejob.fcl"
+
+physics.analyzers.tbdeadtime.BeamTrigInfoFileName: "/nova/ana/users/wallbank/TestBeam/BeamTrigEventInfo/BeamTrigEventInfo_Period3.root"
+physics.analyzers.tbdeadtime.DeadTimeAlg.FEBsIgnored: [ [2,27] ]
+physics.analyzers.tbdeadtime.TrigTimeOffsetSecs: 84.e-6

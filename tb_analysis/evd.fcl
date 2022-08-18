@@ -1,0 +1,5 @@
+#include "beamlineevdjob.fcl"
+
+physics.analyzers.beamlineevd.DrawNOvA: false
+
+physics.analyzers.beamlineevd.UseWCHitPosition: true

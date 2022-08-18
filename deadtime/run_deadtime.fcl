@@ -1,0 +1,5 @@
+#include "tbdeadtimejob.fcl"
+
+#services.TBDeadTimeHandler.DeadTimeFileName: "/nova/ana/users/wallbank/TestBeam/DeadTime/Period3/TBDeadTime_Period3.root"
+services.TBDeadTimeHandler.DeadTimeFileName: "/pnfs/nova/scratch/users/wallbank/testbeam/data/DeadTime/Period3/50us/TBDeadTime_r100985-r101483.root"
+physics.analyzers.tbdeadtime.BeamTrigInfoFileName: "/nova/ana/users/wallbank/TestBeam/BeamTrigEventInfo/BeamTrigEventInfo_Period3.root"

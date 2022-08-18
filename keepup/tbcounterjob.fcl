@@ -1,0 +1,27 @@
+#include "testbeamservices.fcl"
+#include "TBSpillInfo.fcl"
+
+process_name: TBRecoAna
+
+services:
+{
+  # Load the service that manages root files for histograms.
+  @table::standard_tbservices
+}
+
+source:
+{
+  module_type: RootInput
+}
+
+physics:
+{
+  producers:
+  {
+    tbspillinfo: @local::standard_tbspillinfo      
+  }
+
+  reco: [ tbspillinfo ]
+  trigger_paths: [ reco ]
+
+}

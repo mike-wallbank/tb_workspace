@@ -1,0 +1,3 @@
+#include "tbdeadtimejob.fcl"
+
+physics.analyzers.tbdeadtime.BeamTrigInfoFileName: "/nova/app/users/wallbank/tb_shutoff/BeamTriggeredEvents.root"

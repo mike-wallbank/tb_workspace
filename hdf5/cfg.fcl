@@ -1,0 +1,512 @@
+physics: {
+   analyzers: {
+      metadata: {
+         module_label: "metadata"
+         module_type: "Metadata"
+         params: {
+            NOVA: {
+               Label: "beta"
+               Standard: "false"
+            }
+         }
+         runType: "physics"
+         useFhclParent: false
+         useSubruns: true
+      }
+      testbeamhdf5: {
+         ChunkSize: 0
+         CompressionLevel: 6
+         DataTier: "h5"
+         ElementsPerChunk: 128
+         FileExtension: ".h5caf.h5"
+         FillNuTree: false
+         H5Filename: ""
+         ShuffleInts: "false"
+         StandardRecordLabel: "cafmaker"
+         module_label: "testbeamhdf5"
+         module_type: "HDF5Maker"
+      }
+   }
+   end_paths: [
+      "stream1"
+   ]
+   makecaf: [
+      "cafmaker"
+   ]
+   producers: {
+      cafmaker: {
+         AbortOnEmpty: true
+         ApplyLEMNuePresel: true
+         ApplyingFilter: false
+         BeamInput: "ifdbspillinfo"
+         BreakPointInput: "breakpoint"
+         CAFFilename: ""
+         CVNLabelLoosePreselPtP: "cvnevalloosepreselptp"
+         CVNLabelLoosePreselPtPOppHorn: "cvnevalloosepreselptpopphorn"
+         CVNLabelNeutronProng: "cvnneutron"
+         CVNLabelNoCosmics: ""
+         CVNLabelNoCosmicsOppHorn: ""
+         CVNLabelOldPresel: "cvnevaloldpresel"
+         CVNLabelOldPreselOppHorn: "cvnevaloldpreselopphorn"
+         CVNParticle2DLabel: "cvnprong2deval"
+         CVNParticleLabel: "cvnprongeval"
+         CVNParticleOppHornLabel: "cvnprongevalopphorn"
+         CVNPixelMapInput: "cvnmap"
+         CVNTrainingDataInput: ""
+         ClusterInput: "slicer"
+         CosRejBPFInput: "bpfcosrej"
+         CosRejInput: "cosrej"
+         CosmicCVNLabel: "calhit"
+         CosmicInput: "cosmictrack"
+         DAQEventSummaryInput: "dq"
+         DataSpillHasMC: false
+         DataTier: "caf"
+         DiFShowerCVNLabelLoosePreselPtP: "cvnevalloosepreselptpdif"
+         DiFShowerCVNLabelNoCosmics: "cvnevalnocosmicsdif"
+         DiFShowerCVNLabelOldPresel: "cvnevaloldpreseldif"
+         DiFShowerClusterInput: "slicerdif"
+         DiFShowerLIDInput: "sliddif"
+         DiFShowerShwInput: "reclusterdif"
+         Discrete2dInput: ""
+         DiscreteInput: ""
+         ElasticInput: "elasticarmshs"
+         EnableBlindness: false
+         ExposureInput: "exposure"
+         FileExtension: ".caf.root"
+         FillCosmicCVN: false
+         FillNuTree: false
+         FillPixelMaps: false
+         FillTrainingData: false
+         FluxReweightInput: "ppfxcorrection"
+         FullTrainingInfo: false
+         FullTruthInfo: true
+         Fuzzy2DInput: "fuzzykvertex:Prongs2D"
+         Fuzzy3DInput: "fuzzykvertex:Prongs3D"
+         FuzzyHVInput: "fuzzykvertexhv"
+         FuzzyOrphInput: "fuzzykvertex:ProngsOrph"
+         FuzzyWeight2DInput: "fuzzykvertex:Prongs2DWt"
+         FuzzyWeight3DInput: "fuzzykvertex:Prongs3DWt"
+         G4ReweightInput: "g4reweighter"
+         GenMixerInput: "genpremixer"
+         GenMixerProcessName: "EventMixer"
+         GeneratorInput: "generator"
+         GeneratorProcessName: "Genie"
+         HitInput: "calhit"
+         HoughVertexInput: ""
+         IsSAMInput: false
+         IsSinglesOverlay: false
+         JmShowerInput: ""
+         KalmanInput: "kalmantrackmerge"
+         LEMNuePresel: "lemnuepresel"
+         LIDInput: "slid"
+         LemInput: ""
+         MCSpillDataInput: "generator"
+         MEInput: "mefinder"
+         MRCCParentInput: ""
+         MRMode: false
+         MRParentSliceLabel: ""
+         MuonIDInput: "muonid"
+         NCCosRejInput: ""
+         NCPi0BkgRejInput: ""
+         NDRecoInput: "ndreco"
+         NueCosRejInput: "nuecosrej"
+         NuePreselInput: "nuepresel"
+         NueSelInput: ""
+         NueVetoInput: ""
+         NumCVNPrincipalComponents: 16
+         NumuEnergyInput: "numue"
+         NumuLSTMEnergyInput: "lstmee"
+         NumuLSTMEnergyOppHornInput: "lstmeeopphorn"
+         NuonELabel: "nuonecvneval"
+         NuonEOppHornLabel: ""
+         OverlapEBPFInput: "trackoverlapecalc:breakpoint"
+         OverlapEKalInput: "trackoverlapecalc:kalmantrackmerge"
+         RawDataInput: "daq"
+         ReclustShowerInput: "recluster"
+         RegCVNLabel: "regcvneval"
+         RegCVNOppHornLabel: "regcvnevalopphorn"
+         RemidInput: "remid"
+         ReweightInput: "genierw"
+         RockPreselInput: "rockpresel"
+         RvpInput: ""
+         SPIDInput: "spid"
+         SPProngCVN5labelLabel: "spprongcvn5label"
+         SPProngCVNNumuCCEMIDLabel: "spprongcvnnumuccEMID"
+         SingleMixer: "singlemixer"
+         SlcLIDInput: "slclid"
+         SliceLIDInput: "slicelid"
+         SliceLIDOppHornInput: "slicelidopphorn"
+         SpillQualInput: "dqspillflags"
+         StrictMode: false
+         TestBeamCAFMakerParams: {
+            CkovDigitRecoLabel: "ckovhitreco"
+            CkovRecoLabel: "ckovreco"
+            MCenterDataLabel: "tbspillinfo"
+            TBSpillCountersLabel: "tbspillinfo"
+            TestBeamVtxInput: "tbvertex"
+            ToFRecoPMTLabel: "tofrecopmt"
+            ToFRecoSiPMLabel: "tofrecosipm"
+            WCTrackRecoLabel: "wctrackreco"
+         }
+         TrackInfoBPF: "trackinfobpf"
+         TrackInfoKalman: "trackinfokalman"
+         TrueEnergyInput: "geantgen"
+         UseEnergy: true
+         UseGeVPixelMaps: true
+         VertexDTInput: ""
+         VetoInput: "veto"
+         WSCNNLabel: "wscnn"
+         WindowInput: "windowtrack"
+         XnueInput: ""
+         module_label: "cafmaker"
+         module_type: "CAFMaker"
+      }
+   }
+   stream1: [
+      "metadata",
+      "testbeamhdf5"
+   ]
+}
+process_name: "TestBeamHDF5"
+services: {
+   BackTracker: {
+      DoHitsCheck: true
+      GeantModuleLabel: "geantgen"
+      MCOverlayMode: false
+      MRMode: false
+      MinContribFrac: 1e-1
+      MinPhysicsFrac: 5e-1
+      MinPhysicsHits: 4
+      PhotonModuleLabel: "photrans"
+      TrueEnergyModuleLabel: "geantgen"
+      service_type: "BackTracker"
+   }
+   BadChanList: {
+      AbortIfNoSubrun: true
+      AbortIfNoneFound: true
+      AbortOnSmallRunNum: false
+      ApplyBadChan: 1
+      ApplyFEBDropout: false
+      ApplyKnownBadChannels: true
+      BadChanCSVFile: ""
+      CellHitLabel: "calhit"
+      EventCheck: true
+      FEBDropoutTag: "v1.0"
+      KnownBadChannels: [
+         "2-06-04-62",
+         "2-06-04-63",
+         "2-05-10-62",
+         "2-05-10-63",
+         "2-08-11-15",
+         "2-08-11-14",
+         "1-01-04-06",
+         "1-01-04-07",
+         "1-01-02-61",
+         "1-01-02-62",
+         "2-05-11-04",
+         "2-05-11-06",
+         "2-08-12-04",
+         "2-08-11-05",
+         "2-08-07-18",
+         "2-08-07-19",
+         "2-02-06-46",
+         "2-02-06-47",
+         "2-04-06-62",
+         "2-04-06-63",
+         "2-10-02-32",
+         "2-10-02-33",
+         "2-11-04-57",
+         "2-11-04-58"
+      ]
+      MCRunNumber: 0
+      MCSubrunNumber: 0
+      NewCosmicEffTable: false
+      PedestalThresholdHigh: 4095
+      PedestalThresholdLow: 0
+      RandomBadChannelFraction: -1
+      RawDigitLabel: "daq"
+      ValidityTagFarDet: ""
+      ValidityTagNearDet: ""
+      ValidityTagTestBeam: ""
+      VldRunGrouping: 10
+      service_type: "BadChanList"
+   }
+   CMap: {
+      AbortIfLoadFails: true
+      UseExceptions: false
+      Verbosity: 0
+      service_type: "CMap"
+   }
+   Calibrator: {
+      AbsConstsCSVPath: ""
+      AbsEpochTag: "v2.6"
+      AttenCSVPath: ""
+      AttenEpochTag: "v2.6"
+      CalibrationMode: "default"
+      CellByCellCalibRandomOffset: 0
+      CellByCellCalibRandomOffsetHighResolution: false
+      CellByCellCalibRandomOffsetSeed: 24680
+      DriftCSV: ""
+      DriftConstsCSVPath: ""
+      DriftEpochTag: ""
+      DriftGradient: 0
+      DriftReference: 0
+      Gain: -1
+      MakeSinglePointCellHits: false
+      MaskUncalibratedChannelsInMC: true
+      ReadEpochsFromCSV: true
+      SimulateDrift: false
+      Tag: "v15"
+      TimingConstsCSVPath: ""
+      TimingEpochTag: "v2.5"
+      TimingTag: "tv6"
+      UseAbsEpochs: true
+      UseAttenEpochs: true
+      UseCSVsFromUPS: true
+      UseCellByCellCalibRandomOffset: false
+      UseDrift: false
+      UseDriftEpochs: true
+      UseGainSetting4Abs: false
+      UseGainSetting4Atten: false
+      UseTimingEpochs: true
+      UseTimingOffsets: true
+      UseXFunction: false
+      UseYFunction: false
+      XMuCg100FunctionForm: ""
+      XMuCg100FunctionParams: []
+      Xg100FunctionForm: ""
+      Xg100FunctionParams: []
+      Xg140FunctionForm: ""
+      Xg140FunctionParams: []
+      Yg100FunctionForm: ""
+      Yg100FunctionParams: []
+      Yg140FunctionForm: ""
+      Yg140FunctionParams: []
+      default: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_460_7000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_380_7000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+      }
+      newfunc: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_410_9000_110000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_424_10449_110000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+      }
+      service_type: "Calibrator"
+   }
+   CatalogInterface: {
+      service_provider: "TrivialFileDelivery"
+      service_type: "CatalogInterface"
+   }
+   Detector: {
+      service_type: "Detector"
+   }
+   FiberBrightness: {
+      BrightnessFile_FD: "PhotonTransport/fdBrightnessFromCosmics.root"
+      BrightnessFile_ND: "PhotonTransport/ndBrightnessFromCosmics.root"
+      BrightnessFile_TB: "PhotonTransport/tbBrightnessFromCosmics.root"
+      BrightnessLabel: "photrans"
+      BrightnessMapName: "BrightnessByBin"
+      BrightnessValueMapName: "BrightnessByCell"
+      BrightnessValueName: "BrightnessValue"
+      ReadFromFile: false
+      service_type: "FiberBrightness"
+   }
+   FileTransfer: {
+      service_provider: "TrivialFileTransfer"
+      service_type: "FileTransfer"
+   }
+   Geometry: {
+      ForceUseFCLOnly: true
+      GDML: "Geometry/gdml/testbeam-2x2-2block-xtru-vacuum-stagger.gdml"
+      StoreTempGeo: "/tmp"
+      fd: {
+         BigBoxRange: 7500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 50
+         FiducialVolumeXLo: 50
+         FiducialVolumeYHi: 50
+         FiducialVolumeYLo: 50
+         FiducialVolumeZHi: 50
+         FiducialVolumeZLo: 50
+      }
+      nd: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      ndos: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      service_type: "Geometry"
+      tb: {
+         BigBoxRange: 1500
+         BigBoxUsed: true
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+   }
+   HoughCalc: {
+      service_type: "HoughCalc"
+   }
+   IFBeam: {
+      service_type: "IFBeam"
+   }
+   IFDH: {
+      IFDH: {
+         IFDH_BASE_URI: "http://samweb.fnal.gov:8480/sam/nova/api"
+      }
+      service_type: "IFDH"
+   }
+   LiveGeometry: {
+      CalHitLabel: "calhit"
+      CheckBadChannels: true
+      NoRunHistory: false
+      Verbose: false
+      service_type: "LiveGeometry"
+   }
+   MagneticField: {
+      FieldDescriptions: [
+         {
+            ConstantField: [
+               0,
+               0,
+               0
+            ]
+            MagnetizedVolume: "vWorld"
+            UseField: 0
+         }
+      ]
+      service_type: "MagneticField"
+   }
+   RandomNumberGenerator: {
+      service_type: "RandomNumberGenerator"
+   }
+   RunHistory: {
+      AbortIfMissingRunInDB: true
+      AbortIfNoMask: true
+      AnalysisDiBlockMasking: true
+      CalHitLabel: "calhit"
+      CustomMask: [
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+      CustomMasking: false
+      DetGainTag: ""
+      DiBlockMaskTag: "v4.0"
+      FDRHCRunStart: [
+         23420,
+         24588,
+         25413,
+         28037
+      ]
+      FDRHCRunStop: [
+         23670,
+         24613,
+         26685,
+         32397
+      ]
+      FakeRunNumber: 0
+      GetDiBlockMaskFromCondb: true
+      NDRHCRunStart: [
+         11632,
+         11921,
+         12087,
+         12517
+      ]
+      NDRHCRunStop: [
+         11667,
+         11925,
+         12289,
+         13131
+      ]
+      TimeQueries: false
+      UseMasking: false
+      UseQE4HWDB: true
+      Verbosity: 100
+      service_type: "RunHistory"
+   }
+   TBDeadTimeHandler: {
+      DCMsIgnored: [
+         3
+      ]
+      DeadTimeFileName: "TBDeadTime_r100224-r101795.root"
+      DeadTimeTreeName: "tbdeadtime/DeadTimeInfo"
+      DeadTimeUPSPath: "TBDATA_DEADTIME_50us"
+      FEBsIgnored: []
+      UseUPS: true
+      service_provider: "TBDeadTimeHandler"
+      service_type: "TBDeadTimeHandler"
+   }
+   TestBeamRunPeriod: {
+      service_provider: "TestBeamRunPeriod"
+      service_type: "TestBeamRunPeriod"
+   }
+   message: {
+      destinations: {
+         STDOUT: {
+            categories: {
+               ArtReport: {
+                  limit: 100
+               }
+               MTdiagnostics: {
+                  limit: 0
+               }
+               default: {
+                  limit: -1
+               }
+            }
+            threshold: "INFO"
+            type: "cout"
+         }
+      }
+   }
+   scheduler: {
+      debug: {
+         fileName: "cfg.fcl"
+         option: "debug-config"
+         printMode: "raw"
+      }
+      errorOnMissingConsumes: false
+      errorOnSIGINT: true
+      num_schedules: 1
+      num_threads: 1
+      pruneConfig: true
+      reportUnused: true
+   }
+}
+source: {
+   maxEvents: -1
+   module_label: "source"
+   module_type: "RootInput"
+}

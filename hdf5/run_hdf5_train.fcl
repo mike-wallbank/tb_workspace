@@ -1,0 +1,4 @@
+#include "prod_tb_cafandhdf5maker_job.fcl"
+
+physics.producers.cafmaker.FillPixelMaps: true
+physics.producers.cafmaker.FillTrainingData: true

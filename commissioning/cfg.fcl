@@ -1,0 +1,410 @@
+physics: {
+   ana: [
+      "rateshutoffana"
+   ]
+   analyzers: {
+      rateshutoffana: {
+         HoughModuleLabel: "multihough"
+         RawDataLabel: "daq"
+         SpillCountersLabel: "tbspillinfo"
+         SpillInfoLabel: "tbspillinfo"
+         module_label: "rateshutoffana"
+         module_type: "DetectorRateShutOff"
+      }
+   }
+   end_paths: [
+      "ana"
+   ]
+   prod: [
+      "tbspillinfo"
+   ]
+   producers: {
+      tbspillinfo: {
+         Bundle: "MC7_BeamScalars_Prespill"
+         CounterMap: {
+            Beam1: "Z:NOVTSC28"
+            Beam2: "Z:NOVTSC29"
+            Beam3: "Z:NOVTSC30"
+            Ckov: "Z:NOVTSC06"
+            DetFace1: "Z:NOVTSC16"
+            DetFace2: "Z:NOVTSC17"
+            DetFace3: "Z:NOVTSC18"
+            DetFace4: "Z:NOVTSC19"
+            MWPC1: "Z:NOVTSC02"
+            MWPC2: "Z:NOVTSC03"
+            MWPC3: "Z:NOVTSC04"
+            MWPC4: "Z:NOVTSC05"
+            Paddle1: "Z:NOVTSC10"
+            Paddle2: "Z:NOVTSC11"
+            Paddle3: "Z:NOVTSC12"
+            Paddle4: "Z:NOVTSC13"
+            Roam1: "Z:NOVTSC20"
+            Roam2: "Z:NOVTSC21"
+            Roam3: "Z:NOVTSC22"
+            Shield1: "Z:NOVTSC24"
+            Shield12Coinc: "Z:NOVTSC27"
+            Shield2: "Z:NOVTSC25"
+            Shield3: "Z:NOVTSC26"
+            Target90Deg: "Z:NOVTSC00"
+            TargetCount: "Z:NOVTSC09"
+            TargetMWPC: "Z:NOVTSC14"
+            ToFDS1: "Z:NOVTSC31"
+            ToFDS2: "Z:NOVTSC15"
+            ToFUS: "Z:NOVTSC23"
+         }
+         Offset: 4.2
+         RawBLTrigLabel: "daq:Trigger"
+         RawDataLabel: "daq"
+         SaveCounters: true
+         TimeWindow: 500
+         URL: ""
+         module_label: "tbspillinfo"
+         module_type: "TBSpillInfo"
+      }
+   }
+   trigger_paths: [
+      "prod"
+   ]
+}
+process_name: "rateshutoffana"
+services: {
+   BadChanList: {
+      AbortIfNoSubrun: false
+      AbortIfNoneFound: true
+      AbortOnSmallRunNum: false
+      ApplyBadChan: 0
+      ApplyFEBDropout: false
+      ApplyKnownBadChannels: true
+      BadChanCSVFile: ""
+      CellHitLabel: "calhit"
+      EventCheck: true
+      FEBDropoutTag: "v1.0"
+      KnownBadChannels: [
+         "2-06-04-62",
+         "2-06-04-63",
+         "2-05-10-62",
+         "2-05-10-63",
+         "2-08-11-15",
+         "2-08-11-14",
+         "1-01-04-06",
+         "1-01-04-07",
+         "1-01-02-61",
+         "1-01-02-62",
+         "2-05-11-04",
+         "2-05-11-06",
+         "2-08-12-04",
+         "2-08-11-05",
+         "2-08-07-18",
+         "2-08-07-19",
+         "2-02-06-46",
+         "2-02-06-47",
+         "2-04-06-62",
+         "2-04-06-63",
+         "2-10-02-32",
+         "2-10-02-33",
+         "2-11-04-57",
+         "2-11-04-58"
+      ]
+      MCRunNumber: 0
+      MCSubrunNumber: 0
+      NewCosmicEffTable: false
+      PedestalThresholdHigh: 4095
+      PedestalThresholdLow: 0
+      RandomBadChannelFraction: 1e-4
+      RawDigitLabel: "daq"
+      ValidityTagFarDet: ""
+      ValidityTagNearDet: ""
+      VldRunGrouping: 10
+      service_type: "BadChanList"
+   }
+   CMap: {
+      AbortIfLoadFails: true
+      UseExceptions: false
+      Verbosity: 0
+      service_type: "CMap"
+   }
+   Calibrator: {
+      AbsConstsCSVPath: ""
+      AbsEpochTag: "v2.6"
+      AttenCSVPath: ""
+      AttenEpochTag: "v2.6"
+      CalibrationMode: "default"
+      CellByCellCalibRandomOffset: 0
+      CellByCellCalibRandomOffsetHighResolution: false
+      CellByCellCalibRandomOffsetSeed: 24680
+      DriftCSV: ""
+      DriftConstsCSVPath: ""
+      DriftEpochTag: ""
+      DriftGradient: 0
+      DriftReference: 0
+      Gain: -1
+      MakeSinglePointCellHits: false
+      MaskUncalibratedChannelsInMC: true
+      ReadEpochsFromCSV: true
+      SimulateDrift: false
+      Tag: "v14"
+      TimingConstsCSVPath: ""
+      TimingEpochTag: "v2.5"
+      TimingTag: "tv5"
+      UseAbsEpochs: true
+      UseAttenEpochs: true
+      UseCSVsFromUPS: true
+      UseCellByCellCalibRandomOffset: false
+      UseDrift: false
+      UseDriftEpochs: true
+      UseGainSetting4Abs: false
+      UseGainSetting4Atten: false
+      UseTimingEpochs: true
+      UseTimingOffsets: true
+      UseXFunction: false
+      UseYFunction: false
+      XMuCg100FunctionForm: ""
+      XMuCg100FunctionParams: []
+      Xg100FunctionForm: ""
+      Xg100FunctionParams: []
+      Xg140FunctionForm: ""
+      Xg140FunctionParams: []
+      Yg100FunctionForm: ""
+      Yg100FunctionParams: []
+      Yg140FunctionForm: ""
+      Yg140FunctionParams: []
+      default: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_460_7000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_380_7000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_140_4500.root"
+      }
+      newfunc: {
+         ShapeTableFilenameFDData: "Calibrator/adc_shape_fit_table_fd_410_9000_110000.root"
+         ShapeTableFilenameFDMC: "Calibrator/adc_shape_fit_table_fd_424_10449_110000.root"
+         ShapeTableFilenameNDData: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+         ShapeTableFilenameNDMC: "Calibrator/adc_shape_fit_table_nd_116_6729_147000.root"
+      }
+      service_type: "Calibrator"
+   }
+   CatalogInterface: {
+      service_provider: "TrivialFileDelivery"
+      service_type: "CatalogInterface"
+   }
+   Detector: {
+      service_type: "Detector"
+   }
+   FiberBrightness: {
+      BrightnessFile_FD: "PhotonTransport/fdBrightness.root"
+      BrightnessFile_ND: "PhotonTransport/ndBrightness.root"
+      BrightnessLabel: "photrans"
+      BrightnessMapName: "BrightnessByBin"
+      BrightnessValueMapName: "BrightnessByCell"
+      BrightnessValueName: "BrightnessValue"
+      ReadFromFile: false
+      service_type: "FiberBrightness"
+   }
+   FileTransfer: {
+      service_provider: "TrivialFileTransfer"
+      service_type: "FileTransfer"
+   }
+   Geometry: {
+      ForceUseFCLOnly: true
+      GDML: "Geometry/gdml/testbeam-2x2-2block-xtru-vacuum-stagger.gdml"
+      StoreTempGeo: "/tmp"
+      fd: {
+         BigBoxRange: 7500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 50
+         FiducialVolumeXLo: 50
+         FiducialVolumeYHi: 50
+         FiducialVolumeYLo: 50
+         FiducialVolumeZHi: 50
+         FiducialVolumeZLo: 50
+      }
+      nd: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      ndos: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+      service_type: "Geometry"
+      tb: {
+         BigBoxRange: 1500
+         BigBoxUsed: false
+         FiducialVolumeXHi: 20
+         FiducialVolumeXLo: 20
+         FiducialVolumeYHi: 20
+         FiducialVolumeYLo: 20
+         FiducialVolumeZHi: 20
+         FiducialVolumeZLo: 20
+      }
+   }
+   HoughCalc: {
+      service_type: "HoughCalc"
+   }
+   IFBeam: {
+      service_type: "IFBeam"
+   }
+   IFDH: {
+      IFDH: {
+         IFDH_BASE_URI: "http://samweb.fnal.gov:8480/sam/nova/api"
+      }
+      service_type: "IFDH"
+   }
+   LiveGeometry: {
+      CalHitLabel: "calhit"
+      CheckBadChannels: true
+      Verbose: false
+      service_type: "LiveGeometry"
+   }
+   MagneticField: {
+      FieldDescriptions: [
+         {
+            ConstantField: [
+               0,
+               0,
+               0
+            ]
+            MagnetizedVolume: "vWorld"
+            UseField: 0
+         }
+      ]
+      service_type: "MagneticField"
+   }
+   RunHistory: {
+      AbortIfMissingRunInDB: false
+      AbortIfNoMask: false
+      AnalysisDiBlockMasking: true
+      CalHitLabel: "calhit"
+      CustomMask: [
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         1,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0,
+         0
+      ]
+      CustomMasking: false
+      DetGainTag: ""
+      DiBlockMaskTag: "v4.0"
+      FDRHCRunStart: [
+         23420,
+         24588,
+         25413,
+         28037
+      ]
+      FDRHCRunStop: [
+         23670,
+         24613,
+         26685,
+         32397
+      ]
+      FakeRunNumber: 0
+      GetDiBlockMaskFromCondb: true
+      NDRHCRunStart: [
+         11632,
+         11921,
+         12087,
+         12517
+      ]
+      NDRHCRunStop: [
+         11667,
+         11925,
+         12289,
+         13131
+      ]
+      TimeQueries: false
+      UseMasking: true
+      Verbosity: 100
+      service_type: "RunHistory"
+   }
+   TFileService: {
+      fileName: "RateShutOffAna.root"
+      service_type: "TFileService"
+   }
+   TimeTracker: {
+      service_type: "TimeTracker"
+   }
+   message: {
+      destinations: {
+         STDOUT: {
+            categories: {
+               ArtReport: {
+                  limit: 100
+               }
+               MTdiagnostics: {
+                  limit: 0
+               }
+               default: {
+                  limit: -1
+               }
+            }
+            threshold: "INFO"
+            type: "cout"
+         }
+      }
+   }
+   scheduler: {
+      debugConfig: {
+         fileName: "cfg.fcl"
+         printMode: "raw"
+      }
+      errorOnFailureToPut: true
+      errorOnMissingConsumes: false
+      errorOnSIGINT: true
+      num_threads: 1
+      wantSummary: true
+      wantTracer: true
+   }
+}
+source: {
+   fileNames: [
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s00_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s01_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s02_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s03_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s04_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s05_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s06_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s07_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s08_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s09_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s10_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s11_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s12_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s13_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s14_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s15_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s26_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s27_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s28_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s29_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s30_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root",
+      "/pnfs/nova/production/raw2root/R19-09-24-testbeam-production.f/testbeam/001008/100800/Spill/testbeam_r00100800_s31_spill_R19-09-24-testbeam-production.f_v1_data.artdaq.root"
+   ]
+   module_label: "source"
+   module_type: "RootInput"
+}
+trigger_paths: {
+   trigger_paths: [
+      "prod"
+   ]
+}

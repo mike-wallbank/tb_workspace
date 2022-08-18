@@ -1,0 +1,1 @@
+../bin/get_definition_file_list.sh

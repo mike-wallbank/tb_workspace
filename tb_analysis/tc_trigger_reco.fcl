@@ -1,0 +1,22 @@
+# Quick fcl to reconstruct target counter hits too
+
+#include "beamlinerecojob.fcl"
+
+physics.producers.tchitfinder: @local::standard_cfdhitreco
+physics.producers.tchitfinder.RawDataLabel: "daq:OtherDigit"
+physics.producers.tchitfinder.valCFDThreshold: 0.1
+physics.producers.tchitfinder.valTimeSamplingInterval: 0.4
+physics.producers.tchitfinder.SaveAmplitude: true
+
+physics.producers.wchitfinder: @local::standard_cfdhitreco
+physics.producers.wchitfinder.RawDataLabel: "daq:WCDigit"
+physics.producers.wchitfinder.valCFDThreshold: 0.1
+physics.producers.wchitfinder.valTimeSamplingInterval: 0.4
+physics.producers.wchitfinder.SaveAmplitude: true
+
+physics.reco: [ tchitfinder, wchitfinder, cherenkovhitreco, tofcfdhitfinder, tofreco, cherenkovreco, wctrackreco ]
+# physics.reco: [ cherenkovhitreco, tofcfdhitfinder, tofreco, cherenkovreco, wctrackreco ]
+
+#services.BeamlineChannelMap.ChannelMap.OtherChannels: [17,18,19,20]
+services.BeamlineChannelMap.ChannelMap.OtherChannels: [4,17,18,19,20]
+services.BeamlineChannelMap.ChannelMap.WCChannels: [5]

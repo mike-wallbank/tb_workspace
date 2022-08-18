@@ -1,0 +1,3 @@
+#include "prod_tb_gen_text_job.fcl" 
+
+physics.producers.generator.InputFileName: "evts_period3.txt"

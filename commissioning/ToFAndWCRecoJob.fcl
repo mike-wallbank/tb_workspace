@@ -1,0 +1,65 @@
+#include "CFDHitReco.fcl"
+#include "TimeOfFlightReco.fcl"
+#include "ToFRecoAnalysis.fcl"
+#include "ToFFilter.fcl"
+#include "WCTrackReco.fcl"
+#include "beamline2rawdigit.fcl"
+
+process_name: ToFWCReco
+
+AllChannels: [ [0,"Cherenkov"],
+               [8,"USTOF0"],  [9,"USTOF1"],  [10,"USTOF2"], [11,"USTOF3"],
+               [12,"DSTOF0"], [13,"DSTOF1"], [14,"DSTOF2"], [15,"DSTOF3"],
+               [4,"DSTOF4"],  [5,"DSTOF5"],  [6,"DSTOF6"],  [7,"DSTOF7"] ]
+
+ToFChannels: [ [8,"USTOF0"],  [9,"USTOF1"],  [10,"USTOF2"], [11,"USTOF3"],
+               [12,"DSTOF0"], [13,"DSTOF1"], [14,"DSTOF2"], [15,"DSTOF3"],
+               [4,"DSTOF4"],  [5,"DSTOF5"],  [6,"DSTOF6"],  [7,"DSTOF7"] ]
+
+services: {
+  TFileService: { fileName: "WCTrackReco_histo.root"
+                  closeFileFast: false }
+  RandomNumberGenerator: {}
+  message:      { debugModules: ["*"] destinations: { debugmsg:{type: "cout" threshold: "WARNING"} } }
+}
+
+physics: {
+  producers: {
+    tofcfdhitfinder: {
+      @table::standard_CFDHitReco
+      valCFDThreshold:         0.1
+      valTimeSamplingInterval: 0.4
+    }
+    tofreco: {
+      @table::standard_TimeOfFlightReco
+      BeamlineToFDataLabel: "tofcfdhitfinder"
+      ToFChannels:          @local::ToFChannels
+      HitCorrelationWindow: 10
+    }
+    wctrackreco: {
+      @table::standard_wctrackreco
+      RawWCDataLabel: "daq:WC"
+      #BFieldInTesla:    0.205 # 250 A
+      #BFieldInTesla:    0.41  # 500 A
+      BFieldInTesla:    0.615 # 7500 A
+      #BFieldInTesla:    0.82  # 1000 A
+      #BFieldInTesla:    1.025 # 1250 A
+      #BFieldInTesla:    1.23  # 1500 A
+      #BFieldInTesla:    1.64  # 2000 A
+    }
+  }
+
+  reco:          [ tofcfdhitfinder, tofreco, wctrackreco ]
+  trigger_paths: [ reco ]
+
+  stream1:   [ out1 ]
+  end_paths: [ stream1 ]
+}
+
+outputs: {
+  out1: {
+    module_type: RootOutput
+    fileName: "ToFWCReco.root"
+    dataTier: "full-reconstructed"
+  }
+}

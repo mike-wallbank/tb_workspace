@@ -1,0 +1,4 @@
+#include "prod_tb_cafmaker_job.fcl"
+
+#physics.producers.cafmaker.TestBeamCAFMakerParams.MCenterDataLabel: "tbspillinfo::TBSpillInfo"
+physics.producers.cafmaker.TestBeamCAFMakerParams.MCenterDataLabel: "tbspillinfo::TBReco"

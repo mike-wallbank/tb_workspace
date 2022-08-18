@@ -1,0 +1,12 @@
+#include "beamline2rawdigitjob.fcl"
+
+source.FilterEvents: true
+
+source.BeamlineUnpack.TriggerLatency: 100
+source.BeamlineUnpack.TriggerSource: "Trigger"
+source.BeamlineUnpack.UnpackTrigger: true
+source.BeamlineUnpack.UnpackDigitizer: true
+source.BeamlineUnpack.UnpackWireChamber: true
+source.BeamlineUnpack.UnpackTDU: true
+
+services.message.destinations.debugmsg.threshold: "DEBUG" # "INFO" or "DEBUG"
