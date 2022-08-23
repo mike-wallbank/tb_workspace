@@ -18,7 +18,9 @@ from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import Conv2DTranspose
 from tensorflow.keras.layers import LeakyReLU
 from tensorflow.keras.layers import Dropout
-from matplotlib import pyplot
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 import h5py
 
 # define the standalone discriminator model
@@ -33,7 +35,7 @@ def define_discriminator(in_shape=(100,80,1)):
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))
     # compile model
-    opt = SGD(learning_rate=0.0002)
+    opt = SGD(lr=0.0002)
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
     return model
 
@@ -121,19 +123,29 @@ def generate_fake_samples(g_model, latent_dim, n_samples):
     return X, y
 
 # create and save a plot of generated images (reversed grayscale)
-def save_plot(examples, epoch, n=10):
+def save_plot(examples_fake, examples_real, epoch, n=10):
     # plot images
     for i in range(n * n):
         # define subplot
-        pyplot.subplot(n, n, 1 + i)
+        plt.subplot(n, n, 1 + i)
         # turn off axis
-        pyplot.axis('off')
+        #plt.axis('off')
         # plot raw pixel data
-        pyplot.imshow(examples[i, :, :, 0], cmap='gray_r')
+        plt.imshow(examples_fake[i, :, :, 0], cmap='gray_r')
     # save plot to file
     filename = 'generated_plot_e%03d.png' % (epoch+1)
-    pyplot.savefig(filename)
-    pyplot.close()
+    plt.savefig(filename)
+    plt.clf()
+    for i in range(n * n):
+        # define subplot
+        plt.subplot(n, n, 1 + i)
+        # turn off axis
+        #plt.axis('off')
+        # plot raw pixel data
+        plt.imshow(examples_real[i, :, :, 0], cmap='gray_r')
+    # save plot to file
+    filename = 'trainexamples_plot_e%03d.png' % (epoch+1)
+    plt.savefig(filename)
 
 # evaluate the discriminator, plot generated images, save generator model
 def summarize_performance(epoch, g_model, d_model, dataset, latent_dim, n_samples=100):
@@ -148,7 +160,7 @@ def summarize_performance(epoch, g_model, d_model, dataset, latent_dim, n_sample
     # summarize discriminator performance
     print('>Accuracy real: %.0f%%, fake: %.0f%%' % (acc_real*100, acc_fake*100))
     # save plot
-    save_plot(x_fake, epoch)
+    save_plot(x_fake, X_real, epoch)
     # save the generator model tile file
     filename = 'generator_model_%03d.h5' % (epoch + 1)
     g_model.save(filename)
@@ -159,10 +171,8 @@ def train(g_model, d_model, gan_model, dataset, latent_dim, n_epochs=100, n_batc
     half_batch = int(n_batch / 2)
     # manually enumerate epochs
     for i in range(n_epochs):
-        print("Epoch {}".format(i))
         # enumerate batches over the training set
         for j in range(bat_per_epo):
-            print("Batch {}".format(j))
             # get randomly selected 'real' samples
             X_real, y_real = generate_real_samples(dataset, half_batch)
             # generate 'fake' examples
@@ -179,19 +189,25 @@ def train(g_model, d_model, gan_model, dataset, latent_dim, n_epochs=100, n_batc
             g_loss = gan_model.train_on_batch(X_gan, y_gan)
             # summarize loss on this batch
             print('>%d, %d/%d, d=%.3f, g=%.3f' % (i+1, j+1, bat_per_epo, d_loss, g_loss))
-        # # evaluate the model performance, sometimes
-        # if (i+1) % 10 == 0:
-        #     summarize_performance(i, g_model, d_model, dataset, latent_dim)
+        # evaluate the model performance, sometimes
+        if (i+1) % 10 == 0:
+            summarize_performance(i, g_model, d_model, dataset, latent_dim)
 
 # size of the latent space
 latent_dim = 100
 # create the discriminator
 d_model = define_discriminator()
+print("Discriminator model:")
+d_model.summary()
 # create the generator
 g_model = define_generator(latent_dim)
+print("Generator model:")
+g_model.summary()
 # create the gan
 gan_model = define_gan(g_model, d_model)
+print("GAN model:")
+gan_model.summary()
 # load image data
 dataset = load_real_samples()
 # train model
-train(g_model, d_model, gan_model, dataset, latent_dim, 10)
+train(g_model, d_model, gan_model, dataset, latent_dim, 100)
