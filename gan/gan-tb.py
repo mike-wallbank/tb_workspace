@@ -74,7 +74,7 @@ def define_gan(g_model, d_model):
 
 # load cvn maps
 def load_real_samples():
-    inFile = h5py.File('h5_train/gan_reco_1000_TrainData.h5caf.h5', 'r')
+    inFile = h5py.File('h5_train/gan_reco_20000_TrainData.h5caf.h5', 'r')
     pm = array(inFile['cvnmap'])
     pm_shape = pm.reshape(pm.shape[0], 2, 100, 80)
     pm_xz, pm_yz = expand_dims(squeeze(split(pm_shape, 2, axis=1)), axis=-1)
@@ -154,7 +154,7 @@ def summarize_performance(epoch, g_model, d_model, dataset, latent_dim, n_sample
     g_model.save(filename)
 
 # train the generator and discriminator
-def train(g_model, d_model, gan_model, dataset, latent_dim, n_epochs=100, n_batch=233):
+def train(g_model, d_model, gan_model, dataset, latent_dim, n_epochs=100, n_batch=250):
     bat_per_epo = int(dataset.shape[0] / n_batch)
     half_batch = int(n_batch / 2)
     # manually enumerate epochs
