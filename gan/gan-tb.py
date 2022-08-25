@@ -9,7 +9,7 @@ from numpy import vstack
 from numpy import array
 from numpy.random import randn
 from numpy.random import randint
-from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Reshape
@@ -35,7 +35,8 @@ def define_discriminator(in_shape=(100,80,1)):
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))
     # compile model
-    opt = SGD(lr=0.0002)
+    #opt = SGD(lr=0.0002, momentum=0.5)
+    opt = Adam(lr=0.0002, beta_1=0.5)
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
     return model
 
@@ -56,7 +57,7 @@ def define_generator(latent_dim):
     model.add(LeakyReLU(alpha=0.2))
     # create single output feature map (the actual generated image)
     # preserve dimensions so use a kernel which is a multiple
-    model.add(Conv2D(1, (25,20), activation='sigmoid', padding='same'))
+    model.add(Conv2D(1, (25,20), activation='tanh', padding='same'))
     return model
 
 # define the combined generator and discriminator model, for updating the generator
@@ -70,7 +71,8 @@ def define_gan(g_model, d_model):
     # add the discriminator
     model.add(d_model)
     # compile model
-    opt = SGD(lr=0.0002)
+    #opt = SGD(lr=0.0002, momentum=0.5)
+    opt = Adam(lr=0.0002, beta_1=0.5)
     model.compile(loss='binary_crossentropy', optimizer=opt)
     return model
 
@@ -79,20 +81,8 @@ def load_real_samples():
     inFile = h5py.File('h5_train/gan_reco_20000_TrainData.h5caf.h5', 'r')
     pm = array(inFile['cvnmap'])
     pm_shape = pm.reshape(pm.shape[0], 2, 100, 80)
-    pm_xz, pm_yz = expand_dims(squeeze(split(pm_shape, 2, axis=1)), axis=-1)
+    pm_xz, pm_yz = (expand_dims(squeeze(split(pm_shape, 2, axis=1)), axis=-1).astype('float32') - 127.5) / 127.5
     return pm_xz
-
-# # load and prepare mnist training images
-# def load_real_samples():
-#     # load mnist dataset
-#     (trainX, _), (_, _) = load_data()
-#     # expand to 3d, e.g. add channels dimension
-#     X = expand_dims(trainX, axis=-1)
-#     # convert from unsigned ints to floats
-#     X = X.astype('float32')
-#     # scale from [0,255] to [0,1]
-#     X = X / 255.0
-#     return X
 
 # select real samples
 def generate_real_samples(dataset, n_samples):
@@ -117,7 +107,7 @@ def generate_fake_samples(g_model, latent_dim, n_samples):
     # generate points in latent space
     x_input = generate_latent_points(latent_dim, n_samples)
     # predict outputs
-    X = g_model.predict(x_input)
+    X = g_model.predict(x_input, verbose=0)
     # create 'fake' class labels (0)
     y = zeros((n_samples, 1))
     return X, y
@@ -165,22 +155,42 @@ def summarize_performance(epoch, g_model, d_model, dataset, latent_dim, n_sample
     filename = 'generator_model_%03d.h5' % (epoch + 1)
     g_model.save(filename)
 
+# create a line plot of loss for the gan and save to file
+def plot_history(d_loss_real_history, d_acc_real_history,
+                 d_loss_fake_history, d_acc_fake_history,
+                 g_loss_history):
+    # plot loss 
+    plt.subplot(2, 1, 1)
+    plt.plot(d_loss_real_history, label='d-loss (real)')
+    plt.plot(d_loss_fake_history, label='d-loss (fake)')
+    plt.plot(g_loss_history, label='gen-loss')
+    plt.legend()
+    # plot discriminator accuracy
+    plt.subplot(2, 1, 2)
+    plt.plot(d_acc_real_history, label='d-acc (real)')
+    plt.plot(d_acc_fake_history, label='d-acc (fake)')
+    plt.legend()
+    # save plot to file
+    plt.savefig('loss_acc.png')
+    plt.close()
+
 # train the generator and discriminator
 def train(g_model, d_model, gan_model, dataset, latent_dim, n_epochs=100, n_batch=250):
     bat_per_epo = int(dataset.shape[0] / n_batch)
     half_batch = int(n_batch / 2)
+    d_loss_real_history, d_acc_real_history, d_loss_fake_history, d_acc_fake_history, g_loss_history = list(), list(), list(), list(), list()
     # manually enumerate epochs
     for i in range(n_epochs):
         # enumerate batches over the training set
         for j in range(bat_per_epo):
             # get randomly selected 'real' samples
             X_real, y_real = generate_real_samples(dataset, half_batch)
+            # update discriminator model weights 
+            d_loss_real, d_acc_real = d_model.train_on_batch(X_real, y_real)
             # generate 'fake' examples
             X_fake, y_fake = generate_fake_samples(g_model, latent_dim, half_batch)
-            # create training set for the discriminator
-            X, y = vstack((X_real, X_fake)), vstack((y_real, y_fake))
             # update discriminator model weights
-            d_loss, _ = d_model.train_on_batch(X, y)
+            d_loss_fake, d_acc_fake = d_model.train_on_batch(X_fake, y_fake)
             # prepare points in latent space as input for the generator
             X_gan = generate_latent_points(latent_dim, n_batch)
             # create inverted labels for the fake samples
@@ -188,10 +198,18 @@ def train(g_model, d_model, gan_model, dataset, latent_dim, n_epochs=100, n_batc
             # update the generator via the discriminator's error
             g_loss = gan_model.train_on_batch(X_gan, y_gan)
             # summarize loss on this batch
-            print('>%d, %d/%d, d=%.3f, g=%.3f' % (i+1, j+1, bat_per_epo, d_loss, g_loss))
+            print('>%d, %d/%d, d_real=%.3f, d_fake=%.3f, g_loss=%.3f, a_real=%d, a_fake=%d' % \
+                  (i+1, j+1, bat_per_epo, d_loss_real, d_loss_fake, g_loss, int(100*d_acc_real), int(100*d_acc_fake)))
+            # save history
+            d_loss_real_history.append(d_loss_real)
+            d_acc_real_history.append(d_acc_real)
+            d_loss_fake_history.append(d_loss_fake)
+            d_acc_fake_history.append(d_acc_fake)
+            g_loss_history.append(g_loss)
         # evaluate the model performance, sometimes
-        if (i+1) % 10 == 0:
+        if (i+1) % 1 == 0:
             summarize_performance(i, g_model, d_model, dataset, latent_dim)
+        plot_history(d_loss_real_history, d_acc_real_history, d_loss_fake_history, d_acc_fake_history, g_loss_history)
 
 # size of the latent space
 latent_dim = 100
@@ -210,4 +228,4 @@ gan_model.summary()
 # load image data
 dataset = load_real_samples()
 # train model
-train(g_model, d_model, gan_model, dataset, latent_dim, 100)
+train(g_model, d_model, gan_model, dataset, latent_dim, 10)
