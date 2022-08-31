@@ -15,6 +15,7 @@ def show_real(events):
     image = events[event_number].reshape(2, 100, 80)
     image_reduced = image[:,0:32,24:56]
     image_xz, image_yz = np.squeeze(np.split(image_reduced, 2))
+    # draw the image
     plt.imshow(image_xz.T, cmap='gray_r')
     plt.show(block=False)
     plt.pause(3)
@@ -24,7 +25,9 @@ def show_fake(model, latent_dim):
     # generate points in the latent space 
     x_input = np.random.randn(latent_dim)
     x_input = x_input.reshape(1, latent_dim)
+    # generate an image
     X = np.squeeze(model.predict(x_input, verbose=0))
+    # draw the image
     plt.imshow(X.T, cmap='gray_r')
     plt.show(block=False)
     plt.pause(3)
@@ -45,7 +48,7 @@ Humanity has been waiting to distiguish between real and fake images of events f
 """)
 
 number_of_goes = int(sys.argv[1]) if len(sys.argv) > 1 else 100
-print("Showing you {} images of events...".format(number_of_goes))
+print("Showing you {} images of events, 3 seconds each...".format(number_of_goes))
 
 n_real = [0,0]
 n_fake = [0,0]
@@ -62,7 +65,7 @@ for go in range(number_of_goes):
     # ask for guess
     guess = ''
     while guess not in ['real', 'fake']:
-        guess = input("Guess 'real' or fake': ")
+        guess = input("Example {} -- Guess 'real' or fake': ".format(go+1))
 
     if real_or_fake == 0:
         if guess == 'real':
