@@ -20,7 +20,7 @@ from tensorflow.keras.layers import Conv2DTranspose
 from tensorflow.keras.layers import LeakyReLU
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import BatchNormalization
-from tensorflow.keras.utils.vis_utils import plot_model
+from keras.utils.vis_utils import plot_model
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -46,25 +46,25 @@ def define_discriminator(in_shape=(32,32,1)):
     model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     print("Discriminator model:")
-    d_model.summary()
-    plot_model(d_model, to_file='logs/discriminator_plot.png', show_shapes=True, show_layer_names=True)
+    model.summary()
+    plot_model(model, to_file='logs/discriminator_plot.png', show_shapes=True, show_layer_names=True)
     return model
 
 # define the standalone generator model
 def define_generator(latent_dim):
     init = RandomNormal(stddev=0.02)
     model = Sequential()
-    # foundation for 25x20 image
+    # foundation for 8x8 image
     # 128 is the number of images which can be generated, in the convolutional layer
     n_nodes = 128 * 8 * 8
     model.add(Dense(n_nodes, kernel_initializer=init, input_dim=latent_dim))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Reshape((8, 8, 128)))
-    # upsample to 50x40
+    # upsample to 16x16
     model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same', kernel_initializer=init))
     model.add(BatchNormalization(momentum=0.8))
     model.add(LeakyReLU(alpha=0.2))
-    # upsample to 100x80
+    # upsample to 32x32
     model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same', kernel_initializer=init))
     model.add(BatchNormalization(momentum=0.8))
     model.add(LeakyReLU(alpha=0.2))
@@ -73,8 +73,8 @@ def define_generator(latent_dim):
     model.add(Conv2D(1, (8,8), activation='tanh', padding='same', kernel_initializer=init))
 
     print("Generator model:")
-    g_model.summary()
-    plot_model(g_model, to_file='logs/generator_plot.png', show_shapes=True, show_layer_names=True)
+    model.summary()
+    plot_model(model, to_file='logs/generator_plot.png', show_shapes=True, show_layer_names=True)
 
     return model
 
@@ -95,7 +95,7 @@ def define_gan(g_model, d_model):
     #model.compile(loss='mean_squared_error', optimizer=opt)
 
     print("GAN model:")
-    gan_model.summary()
+    model.summary()
 
     return model
 
