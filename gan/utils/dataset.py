@@ -1,9 +1,8 @@
 import h5py
 import numpy as np
 
-from sklearn.model_selection import train_test_split
-
 class dataset():
+
     def __init__(self, config, files=None, run_info=False):
         self._config = config
         self._props = []
@@ -15,8 +14,6 @@ class dataset():
 
             h5 = h5py.File(f,'r')
             labels = h5['pdg'][:]
-
-            # Note: This is where you could apply generator level cuts
 
             # the run info can sometimes be memory consuming, only load if needed
             if run_info:
@@ -30,7 +27,7 @@ class dataset():
                     self._props.append({'file': f, 'idx': n, 'label': label, 
                                         'run': run, 'subrun': subrun, 'cyc': cyc, 'evt': evt, 'sl': sl})
             else:
-                for n, label in enumerate(labs):
+                for n, label in enumerate(labels):
                     self._props.append({'file': f, 'idx': n, 'label': label})
         
             h5.close()
@@ -48,19 +45,6 @@ class dataset():
         self.ids = np.arange(n)
         print('Loaded '+str(n)+' events')
         np.random.shuffle(self.ids)
-
-    # split into two datasets of size frac and 1-frac
-    def split(self, frac = 0.1):
-        print('Splitting into '+str(1-frac)+' train and '+str(frac)+' eval...')
-        train,eval = train_test_split(self._props, test_size=frac)
-
-        d1 = dataset(self._config)
-        d1.add_props(train)
-
-        d2 = dataset(self._config)
-        d2.add_props(eval)
-        
-        return d1, d2
 
     # load a given data property
     def load_prop(self, i):

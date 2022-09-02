@@ -1,0 +1,2 @@
+/nova/app/users/wallbank/tb_workspace/gan/h5_train/gan_reco_1000_TrainData.h5caf.h5
+/nova/app/users/wallbank/tb_workspace/gan/h5_train/gan_reco_20000_TrainData.h5caf.h5

@@ -12,10 +12,9 @@ config = parse()
 # Generate a list of files to use for training
 files = [os.path.join(config.dataset,f) for f in os.listdir(config.dataset)]
 data = dataset(config, files, run_info=False)
-train, test = data.split()
 
 # Initialize the model
-kModel = model(config)
+model_ = model(config)
 
-# # GO GO GO
-# kModel.train(train, test)
+# Train the model
+model_.train(data)

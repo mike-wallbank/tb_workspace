@@ -28,8 +28,6 @@ class data_generator(keras.utils.Sequence):
         for i in idx:
             pm = self._dataset.load_pm(i)
 
-            # Note: Do data augmentation and weighting here
-            
             pms.append(pm)
             lab.append(self._dataset.load_label(i))
 
