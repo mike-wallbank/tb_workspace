@@ -1,4 +1,3 @@
-from keras.optimizers import Adam
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Reshape
@@ -7,9 +6,11 @@ from keras.layers import Conv2D
 from keras.layers import Conv2DTranspose
 from keras.layers import LeakyReLU
 from keras.layers import Dropout
+from keras.layers import BatchNormalization
+from keras.initializers import RandomNormal
 
 # define the standalone generator model
-def define_generator(latent_dim, save_name=None):
+def generator(latent_dim, save_name=None):
 
     model = Sequential()
     init = RandomNormal(stddev=0.02)
@@ -40,7 +41,7 @@ def define_generator(latent_dim, save_name=None):
     return model
 
 # define the standalone discriminator model
-def define_discriminator(in_shape=(32,32,1), save_file=None):
+def discriminator(in_shape=(32,32,1), save_file=None):
 
     model = Sequential()
     init = RandomNormal(stddev=0.02)
@@ -63,7 +64,7 @@ def define_discriminator(in_shape=(32,32,1), save_file=None):
 
     return model
 
-def gan_model(g_model, d_model):
+def gan(g_model, d_model, save_file=None):
 
     # make weights in the discriminator not trainable
     d_model.trainable = False
@@ -76,5 +77,10 @@ def gan_model(g_model, d_model):
 
     # add the discriminator
     model.add(d_model)
+
+    print("GAN model:")
+    model.summary()
+    if save_file:
+        plot_model(model, to_file=save_file, show_shapes=True, show_layer_names=True)
 
     return model

@@ -1,6 +1,9 @@
-
 import utils.architecture as ac
 import utils.generator as gen
+
+import numpy as np
+
+from keras.optimizers import Adam
 
 class model():
 
@@ -18,16 +21,16 @@ class model():
 
 
     # generate points in latent space as input for the generator
-    def generate_latent_points(n_samples):
-        x_input = randn(self.latent_dim * n_samples)
+    def generate_latent_points(self, n_samples):
+        x_input = np.random.randn(self.latent_dim * n_samples)
         x_input = x_input.reshape(n_samples, self.latent_dim)
         return x_input
 
 
     # use the generator to generate n fake examples, with class labels
-    def generate_fake_samples(n_samples):
-        x_input = generate_latent_points(n_samples)
-        X =self.generator_model.predict(x_input, verbose=0)
+    def generate_fake_samples(self, n_samples):
+        x_input = self.generate_latent_points(n_samples)
+        X = self.generator_model.predict(x_input, verbose=0)
         return X
 
 
@@ -47,54 +50,48 @@ class model():
     # Train the generator and discriminator
     def train(self, dataset):
 
+        half_batch = int(self._config.batch_size / 2)
         data_gen = gen.data_generator(dataset, self._config.batch_size)
 
-        #half_batch = int(n_batch / 2)
         d_loss_real_history, d_acc_real_history, d_loss_fake_history, d_acc_fake_history, g_loss_history = list(), list(), list(), list(), list()
 
         # compile models
         # if I do it here, does it work?  Will probably remove those annoying warnings, thinking about it...
-        #opt = SGD(lr=0.0002, momentum=0.5)
         opt = Adam(lr=self._config.learning_rate, beta_1=self._config.learning_beta)
         self.discriminator_model.compile(loss='binary_crossentropy', optimizer=opt, metrics=['accuracy'])
         self.gan_model.compile(loss='binary_crossentropy', optimizer=opt)
-
-        workers = multiprocessing.gpu_count()
-        print('Starting training on '+str(workers)+' GPUs.')
 
         # manually enumerate epochs
         for epoch in range(self._config.epochs):
 
             # enumerate batches over the training set
-            for batch in range(bat_per_epo):
+            for batch in range(data_gen.__len__()):
 
-                # get 'real' samples
-                X_real = data_gen.__getitem__(batch)
-                print(X_real.shape)
-                y_real = ones((X_real.shape[0], 1))
+                # get half a batch of 'real' samples
+                X_real, _ = data_gen.__getitem__(batch)
+                X_real = np.split(X_real, 2)
+                y_real = np.ones((half_batch, 1))
 
                 # update discriminator model weights 
-                d_loss_real, d_acc_real = d_model.train_on_batch(X_real, y_real)
+                d_loss_real, d_acc_real = self.discriminator_model.train_on_batch(X_real[0], y_real)
 
-                # generate 'fake' examples
-                X_fake = generate_fake_samples(self._config.batch_size)
-                y_fake = zeros((self._config.batch_size, 1))
+                # generate half a batch of 'fake' examples
+                X_fake = self.generate_fake_samples(half_batch)
+                y_fake = np.zeros((half_batch, 1))
 
                 # update discriminator model weights
-                d_loss_fake, d_acc_fake = d_model.train_on_batch(X_fake, y_fake)
+                d_loss_fake, d_acc_fake = self.discriminator_model.train_on_batch(X_fake, y_fake)
 
                 # prepare points in latent space as input for the generator
-                X_gan = generate_latent_points(latent_dim, n_batch)
-
-                # create inverted labels for the fake samples
-                y_gan = ones((n_batch, 1))
+                X_gan = self.generate_latent_points(half_batch*2)
+                y_gan = np.ones((half_batch*2, 1))
 
                 # update the generator via the discriminator's error
-                g_loss = gan_model.train_on_batch(X_gan, y_gan)
+                g_loss = self.gan_model.train_on_batch(X_gan, y_gan)
 
                 # summarize loss on this batch
                 print('>%d, %d/%d, d_real=%.3f, d_fake=%.3f, g_loss=%.3f, a_real=%d, a_fake=%d' % \
-                      (i+1, j+1, bat_per_epo, d_loss_real, d_loss_fake, g_loss, int(100*d_acc_real), int(100*d_acc_fake)))
+                      (epoch+1, batch+1, data_gen.__len__(), d_loss_real, d_loss_fake, g_loss, int(100*d_acc_real), int(100*d_acc_fake)))
 
                 # save history
                 d_loss_real_history.append(d_loss_real)
@@ -103,28 +100,14 @@ class model():
                 d_acc_fake_history.append(d_acc_fake)
                 g_loss_history.append(g_loss)
 
-                # evaluate the model performance, sometimes
-                if (epoch+1) % 100 == 0:
-                    summarize_performance(epoch, g_model, d_model, dataset, latent_dim)
+            data_gen.on_epoch_end()
 
-        plot_history(d_loss_real_history, d_acc_real_history, d_loss_fake_history, d_acc_fake_history, g_loss_history)
+            # evaluate the model performance, sometimes
+            if (epoch+1) % 100 == 0:
+                summarize_performance(epoch, g_model, d_model, dataset, latent_dim)
 
-        # self.keras_model.fit(x=train_gen,
-        #                      steps_per_epoch=self._config.train_iterations,
-        #                      validation_data=eval_gen,
-        #                      validation_steps=self._config.eval_iterations,
-        #                      epochs=self._config.epochs,
-        #                      callbacks=callbacks,
-        #                      verbose=1,
-        #                      workers=workers,
-        #                      max_queue_size=128,
-        #                      use_multiprocessing=True,
-        #                      initial_epoch=self.epoch)
+        # plot_history(d_loss_real_history, d_acc_real_history, d_loss_fake_history, d_acc_fake_history, g_loss_history)
 
-    def generate(self):
-        
-        p = self.gan_model.predict(np.array([pm]))
-        return p[0]
 
     def save_model(self):
         K.set_learning_phase(0)

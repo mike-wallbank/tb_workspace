@@ -10,21 +10,15 @@ def parse():
     parser.add_argument('--model_file', default=None)
     
     parser.add_argument('--batch_size', type=int)
-    parser.add_argument('--test_size', type=float)
-    
-    parser.add_argument('--train_iterations', type=int)
-    parser.add_argument('--eval_iterations', type=int)
     
     parser.add_argument('--dataset')
-    
+
+    parser.add_argument('--latent_dim', type=int)
+
     parser.add_argument('--learning_rate', type=float)
-    parser.add_argument('--momentum', type=float)
-    parser.add_argument('--nesterov', action='store_true')
+    parser.add_argument('--learning_beta', type=float)
     
     parser.add_argument('--epochs', type=int)
-    parser.add_argument('--learning_rate_factor', type=float)
-    parser.add_argument('--learning_rate_patience', type=int)
-    parser.add_argument('--early_stopping_patience', type=int)
     
     parser.add_argument('--out_directory')
 
