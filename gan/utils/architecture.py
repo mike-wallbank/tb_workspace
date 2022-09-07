@@ -17,21 +17,25 @@ def generator(latent_dim, save_name=None):
 
     # foundation for 8x8 image
     # 128 is the number of images which can be generated, in the convolutional layer
-    n_nodes = 128 * 16 * 16
+    n_nodes = 128 * 8 * 8
     model.add(Dense(n_nodes, kernel_initializer=init, input_dim=latent_dim))
     model.add(LeakyReLU(alpha=0.2))
-    model.add(Reshape((16, 16, 128)))
+    model.add(Reshape((8, 8, 128)))
     # upsample to 16x16
     model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same', kernel_initializer=init))
     model.add(BatchNormalization(momentum=0.8))
     model.add(LeakyReLU(alpha=0.2))
-    # # upsample to 32x32
+    # upsample to 32x32
+    model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same', kernel_initializer=init))
+    model.add(BatchNormalization(momentum=0.8))
+    model.add(LeakyReLU(alpha=0.2))
+    # # upsample to 64x64
     # model.add(Conv2DTranspose(128, (4,4), strides=(2,2), padding='same', kernel_initializer=init))
     # model.add(BatchNormalization(momentum=0.8))
     # model.add(LeakyReLU(alpha=0.2))
     # create single output feature map (the actual generated image)
     # preserve dimensions so use a kernel which is a multiple
-    model.add(Conv2D(1, (4,4), activation='tanh', padding='same', kernel_initializer=init))
+    model.add(Conv2D(1, (8,8), activation='tanh', padding='same', kernel_initializer=init))
 
     print("Generator model:")
     model.summary()
@@ -54,6 +58,10 @@ def discriminator(in_shape=(32,32,1), save_file=None):
     model.add(BatchNormalization(momentum=0.8))
     model.add(LeakyReLU(alpha=0.2))
     model.add(Dropout(0.4))
+    # model.add(Conv2D(64, (3,3), strides=(2, 2), padding='same', kernel_initializer=init))
+    # model.add(BatchNormalization(momentum=0.8))
+    # model.add(LeakyReLU(alpha=0.2))
+    # model.add(Dropout(0.4))
     model.add(Flatten())
     model.add(Dense(1, activation='sigmoid'))
 
