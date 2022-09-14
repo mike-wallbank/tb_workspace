@@ -11,7 +11,7 @@ config = parse()
 
 # Generate a list of files to use for training
 files = [os.path.join(config.dataset,f) for f in os.listdir(config.dataset)]
-data = dataset(config, files, run_info=False)
+data = dataset(config, files, keep_in_memory=True, run_info=False)
 
 # Initialize the model
 model_ = model(config)

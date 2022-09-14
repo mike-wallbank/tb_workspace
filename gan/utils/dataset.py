@@ -3,9 +3,11 @@ import numpy as np
 
 class dataset():
 
-    def __init__(self, config, files=None, run_info=False):
+    def __init__(self, config, files=None, keep_in_memory=False, run_info=False):
         self._config = config
         self._props = []
+        self._maps = []
+        self._keep_in_memory = keep_in_memory
 
         # Loop over each file and count the number of pixel maps present
         for f in files or [0]:
@@ -29,34 +31,40 @@ class dataset():
             else:
                 for n, label in enumerate(labels):
                     self._props.append({'file': f, 'idx': n, 'label': label})
-        
+
+            # this needs revisiting if I ever have more than one file
+            if self._keep_in_memory:
+                self._maps = np.array(h5['cvnmap'])
+
             h5.close()
         else:
             self.prepare()
 
-    # add external data properties to this dataset
-    def add_props(self, props):
-        self._props += props
-        self.prepare()
 
     # set the available ids and shuffle
     def prepare(self):
         n = len(self._props)
         self.ids = np.arange(n)
-        print('Loaded '+str(n)+' events')
+        print("Loaded {} events".format(n))
         np.random.shuffle(self.ids)
+
 
     # load a given data property
     def load_prop(self, i):
         return self._props[i]
-    
+
+
     # load a pixel map from an hdf5
     def load_pm(self, i):
-        prop = self.load_prop(i)
-        f = h5py.File(prop['file'],'r')
-        pm = f['cvnmap'][prop['idx']]
-        f.close()
+        if self._keep_in_memory:
+            pm = self._maps[i]
+        else:
+            prop = self.load_prop(i)
+            f = h5py.File(prop['file'],'r')
+            pm = f['cvnmap'][prop['idx']]
+            f.close()
         return pm
+
 
     # load a label from an hdf5
     def load_label(self, i):
