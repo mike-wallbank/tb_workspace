@@ -1,9 +1,0 @@
-#
-# prod_tb_sim_pid_job.fcl
-# Run the NOvA detector reconstruction
-#
-
-#include "prod_tb_bl_data_pid_job.fcl"
-
-#physics.producers.calhit.RawDataLabel: "daqmerge"
-physics.reco: [ storegdml, @sequence::standard_tbdetreco_seq, @sequence::standard_tbpidreco_seq ]
